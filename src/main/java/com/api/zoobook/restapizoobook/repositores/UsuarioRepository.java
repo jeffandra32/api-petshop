@@ -1,11 +1,11 @@
 package com.api.zoobook.restapizoobook.repositores;
 
-import com.api.zoobook.restapizoobook.domain.Usuario;
+import com.api.zoobook.restapizoobook.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
+public interface UsuarioRepository extends JpaRepository<User, Integer> {
 
 
 

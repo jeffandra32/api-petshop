@@ -1,5 +1,7 @@
 package com.api.zoobook.restapizoobook.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
@@ -16,6 +18,7 @@ public class Estado implements Serializable {
     @NotEmpty(message = "O nome não pode ser vazio")
     private String nome;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "estado")
     private List<Cidade> cidades = new ArrayList<>();
 

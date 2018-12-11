@@ -1,6 +1,7 @@
 package com.api.zoobook.restapizoobook.domain;
 
 import com.api.zoobook.restapizoobook.enums.TipoUsuario;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.validator.constraints.br.CNPJ;
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -10,7 +11,7 @@ import java.io.Serializable;
 import java.util.*;
 
 @Entity
-public class Usuario implements Serializable {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,17 +26,18 @@ public class Usuario implements Serializable {
     private String cpfOuCnpj;
     private Integer tipo;
 
-    @OneToMany(mappedBy = "usuario")
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user")
     private List<Endereco> enderecos = new ArrayList<>();
 
     @ElementCollection
     @CollectionTable(name = "telefone")
     private Set<String> telefones = new HashSet<>();
 
-    public Usuario() {
+    public User() {
     }
 
-    public Usuario(Integer id, String nome, String email, String cpfOuCnpj, TipoUsuario tipo) {
+    public User(Integer id, String nome, String email, String cpfOuCnpj, TipoUsuario tipo) {
         this.id = id;
         this.nome = nome;
         this.email = email;
@@ -47,8 +49,8 @@ public class Usuario implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Usuario usuario = (Usuario) o;
-        return Objects.equals(id, usuario.id);
+        User user = (User) o;
+        return Objects.equals(id, user.id);
     }
 
     @Override

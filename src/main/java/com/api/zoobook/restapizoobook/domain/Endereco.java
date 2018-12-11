@@ -1,6 +1,8 @@
 package com.api.zoobook.restapizoobook.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
@@ -21,9 +23,10 @@ public class Endereco implements Serializable {
     private String bairro;
     private String cep;
 
+    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "cidade_id")
@@ -33,14 +36,14 @@ public class Endereco implements Serializable {
     }
 
     public Endereco(Integer id, String logradouro, String numero,
-                    String complemento, String bairro, String cep, Usuario usuario, Cidade cidade) {
+                    String complemento, String bairro, String cep, User user, Cidade cidade) {
         this.id = id;
         this.logradouro = logradouro;
         this.numero = numero;
         this.complemento = complemento;
         this.bairro = bairro;
         this.cep = cep;
-        this.usuario = usuario;
+        this.user = user;
         this.cidade = cidade;
     }
 
@@ -105,12 +108,12 @@ public class Endereco implements Serializable {
         this.cep = cep;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public User getUser() {
+        return user;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Cidade getCidade() {
