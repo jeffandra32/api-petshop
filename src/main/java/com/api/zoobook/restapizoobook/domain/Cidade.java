@@ -1,7 +1,5 @@
 package com.api.zoobook.restapizoobook.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
@@ -16,7 +14,7 @@ public class Cidade implements Serializable {
     @NotEmpty(message = "O nome não pode ser vazio")
     private String nome;
 
-    @JsonManagedReference
+
     @ManyToOne
     @JoinColumn(name = "estado_id")
     private Estado estado;

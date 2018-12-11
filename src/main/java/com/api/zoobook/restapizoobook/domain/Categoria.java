@@ -1,8 +1,5 @@
 package com.api.zoobook.restapizoobook.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.sun.javafx.beans.IDProperty;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
@@ -19,7 +16,7 @@ public class Categoria implements Serializable {
     @NotEmpty(message = "O nome não pode ser vazio")
     private String nome;
 
-    @JsonManagedReference
+
     @ManyToMany(mappedBy = "categorias")
     private List<Produto> produtos = new ArrayList<>();
 

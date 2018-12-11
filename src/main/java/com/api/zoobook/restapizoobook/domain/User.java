@@ -2,7 +2,6 @@ package com.api.zoobook.restapizoobook.domain;
 
 import com.api.zoobook.restapizoobook.enums.TipoUsuario;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.validator.constraints.br.CNPJ;
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -30,13 +29,14 @@ public class User implements Serializable {
     @JsonIgnore
     private String password;
 
-    @JsonManagedReference
+
     @OneToMany(mappedBy = "user")
     private List<Endereco> enderecos = new ArrayList<>();
 
     @ElementCollection
     @CollectionTable(name = "telefone")
     private Set<String> telefones = new HashSet<>();
+
 
     @JsonIgnore
     @OneToMany(mappedBy = "user")

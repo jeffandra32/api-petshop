@@ -1,10 +1,14 @@
 package com.api.zoobook.restapizoobook.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Pedido implements Serializable {
@@ -12,11 +16,15 @@ public class Pedido implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     @NotEmpty(message = "Este campo não pode ser vazio")
-    private Date intante;
+    private Date instante;
+
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
     private Pagamento pagamento;
+
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -26,12 +34,16 @@ public class Pedido implements Serializable {
     @JoinColumn(name = "endereco_de_entrega_id")
     private Endereco enderecoDeEntrega;
 
+    @OneToMany(mappedBy = "id.pedido")
+    private Set<ItemPedido> itens = new HashSet<>();
+
+
     public Pedido() {
     }
 
-    public Pedido(Integer id, Date intante,  User user, Endereco enderecoDeEntrega) {
+    public Pedido(Integer id, Date instante,  User user, Endereco enderecoDeEntrega) {
         this.id = id;
-        this.intante = intante;
+        this.instante = instante;
         this.user = user;
         this.enderecoDeEntrega = enderecoDeEntrega;
     }
@@ -57,12 +69,12 @@ public class Pedido implements Serializable {
         this.id = id;
     }
 
-    public Date getIntante() {
-        return intante;
+    public Date getInstante() {
+        return instante;
     }
 
-    public void setIntante(Date intante) {
-        this.intante = intante;
+    public void setInstante(Date instante) {
+        this.instante = instante;
     }
 
     public Pagamento getPagamento() {
@@ -87,5 +99,13 @@ public class Pedido implements Serializable {
 
     public void setEnderecoDeEntrega(Endereco enderecoDeEntrega) {
         this.enderecoDeEntrega = enderecoDeEntrega;
+    }
+
+    public Set<ItemPedido> getItens() {
+        return itens;
+    }
+
+    public void setItens(Set<ItemPedido> itens) {
+        this.itens = itens;
     }
 }

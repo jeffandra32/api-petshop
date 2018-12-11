@@ -1,11 +1,11 @@
 package com.api.zoobook.restapizoobook.domain;
 
 import com.api.zoobook.restapizoobook.enums.EstadoPagamento;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -17,6 +17,7 @@ public class Pagamento implements Serializable {
     @NotEmpty(message = "Este campo não pode ser vazio")
     private Integer estado;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "pedido_id")
     @MapsId
