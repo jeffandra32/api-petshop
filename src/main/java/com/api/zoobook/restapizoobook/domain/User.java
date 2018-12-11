@@ -1,6 +1,7 @@
 package com.api.zoobook.restapizoobook.domain;
 
 import com.api.zoobook.restapizoobook.enums.TipoUsuario;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.validator.constraints.br.CNPJ;
 import org.hibernate.validator.constraints.br.CPF;
@@ -26,6 +27,9 @@ public class User implements Serializable {
     private String cpfOuCnpj;
     private Integer tipo;
 
+    @JsonIgnore
+    private String password;
+
     @JsonManagedReference
     @OneToMany(mappedBy = "user")
     private List<Endereco> enderecos = new ArrayList<>();
@@ -34,6 +38,7 @@ public class User implements Serializable {
     @CollectionTable(name = "telefone")
     private Set<String> telefones = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Pedido> pedidos = new ArrayList<>();
 
@@ -42,12 +47,13 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(Integer id, String nome, String email, String cpfOuCnpj, TipoUsuario tipo) {
+    public User(Integer id, String nome, String email, String cpfOuCnpj, TipoUsuario tipo, String password) {
         this.id = id;
+        this.password = password;
         this.nome = nome;
         this.email = email;
         this.cpfOuCnpj = cpfOuCnpj;
-        this.tipo = tipo.getCod();
+        this.tipo = (tipo == null) ? null: tipo.getCod();
     }
 
     @Override
@@ -125,5 +131,13 @@ public class User implements Serializable {
 
     public void setPedidos(List<Pedido> pedidos) {
         this.pedidos = pedidos;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
