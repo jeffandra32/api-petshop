@@ -34,6 +34,7 @@ public class User implements Serializable {
     @CollectionTable(name = "telefone")
     private Set<String> telefones = new HashSet<>();
 
+    @OneToMany(mappedBy = "user")
     private List<Pedido> pedidos = new ArrayList<>();
 
 

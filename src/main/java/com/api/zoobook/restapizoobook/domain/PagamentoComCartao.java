@@ -2,8 +2,10 @@ package com.api.zoobook.restapizoobook.domain;
 
 import com.api.zoobook.restapizoobook.enums.EstadoPagamento;
 
+import javax.persistence.Entity;
 import javax.validation.constraints.NotEmpty;
 
+@Entity
 public class PagamentoComCartao extends Pagamento{
 
     @NotEmpty(message = "Este campo não pode ser vazio")
