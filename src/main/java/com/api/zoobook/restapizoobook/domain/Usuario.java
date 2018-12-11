@@ -1,24 +1,35 @@
 package com.api.zoobook.restapizoobook.domain;
 
 import com.api.zoobook.restapizoobook.enums.TipoUsuario;
+import org.hibernate.validator.constraints.br.CNPJ;
+import org.hibernate.validator.constraints.br.CPF;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
+@Entity
 public class Usuario implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @NotEmpty(message = "Este campo não pode ser vazio")
     private String nome;
+    @NotEmpty(message = "Este campo não pode ser vazio")
     private String email;
+    @NotEmpty(message = "Este campo não pode ser vazio")
+    @CPF
+    @CNPJ
     private String cpfOuCnpj;
     private Integer tipo;
 
-
+    @OneToMany(mappedBy = "usuario")
     private List<Endereco> enderecos = new ArrayList<>();
 
+    @ElementCollection
+    @CollectionTable(name = "telefone")
     private Set<String> telefones = new HashSet<>();
 
     public Usuario() {
@@ -30,6 +41,19 @@ public class Usuario implements Serializable {
         this.email = email;
         this.cpfOuCnpj = cpfOuCnpj;
         this.tipo = tipo.getCod();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Usuario usuario = (Usuario) o;
+        return Objects.equals(id, usuario.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     public Integer getId() {
