@@ -13,7 +13,7 @@ public class UserService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public User buscar(Integer id){
+    public User find(Integer id){
         Optional<User> obj = usuarioRepository.findById(id);
         return obj.orElse(null);
     }
