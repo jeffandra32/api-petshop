@@ -4,6 +4,7 @@ import com.api.zoobook.restapizoobook.domain.Categoria;
 import com.api.zoobook.restapizoobook.dto.CategoriaDTO;
 import com.api.zoobook.restapizoobook.exceptions.ObjectNotFoundException;
 import com.api.zoobook.restapizoobook.repositores.CategoriaRepository;
+import com.api.zoobook.restapizoobook.services.exceptions.DataIntegrityException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -18,52 +19,49 @@ import java.util.Optional;
 public class CategoriaService {
 
     @Autowired
-    private CategoriaRepository categoriaRepository;
+    private CategoriaRepository repo;
 
-
-    /** Metodo GET ID*/
-    public Categoria find(Integer id){
-        Optional<Categoria> obj = categoriaRepository.findById(id);
-            if(obj == null){
-                throw new ObjectNotFoundException("Objeto não encontrado ID: " + id
-                        + " , Tipo: " + Categoria.class.getName());
-            }
-        return obj.orElse(null);
+    public Categoria find(Integer id) {
+        Optional<Categoria> obj = repo.findById(id);
+        return obj.orElseThrow(() -> new ObjectNotFoundException(
+                "Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
     }
 
-    /** Metodo GET ALL*/
-    public List<Categoria> findAll(){
-        return categoriaRepository.findAll();
-    }
-
-    /** Metodo POST */
-    public  Categoria insert(Categoria obj){
+    public Categoria insert(Categoria obj) {
         obj.setId(null);
-        return categoriaRepository.save(obj);
+        return repo.save(obj);
     }
 
-    /** Metodo UPDATE */
-    public  Categoria update(Categoria obj){
-        find(obj.getId());
-        return categoriaRepository.save(obj);
+    public Categoria update(Categoria obj) {
+        Categoria newObj = find(obj.getId());
+        updateData(newObj, obj);
+        return repo.save(newObj);
     }
 
-    /** Metodo DELETE */
-    public  void delete(Integer id){
+    public void delete(Integer id) {
         find(id);
         try {
-            categoriaRepository.deleteById(id);
-        }catch (DataIntegrityViolationException e){
-            throw new DataIntegrityViolationException("Não é possível excluir uma categoria que ainda possui produtos");
+            repo.deleteById(id);
+        }
+        catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityException("Não é possível excluir uma categoria que possui produtos");
         }
     }
 
-    public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
-        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.fromString(direction),orderBy);
-        return categoriaRepository.findAll(pageRequest);
+    public List<Categoria> findAll() {
+        return repo.findAll();
     }
 
-    public Categoria fromDTO(CategoriaDTO objDto){
+    public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
+        return repo.findAll(pageRequest);
+    }
+
+    public Categoria fromDTO(CategoriaDTO objDto) {
         return new Categoria(objDto.getId(), objDto.getNome());
+    }
+
+    private void updateData(Categoria newObj, Categoria obj) {
+        newObj.setNome(obj.getNome());
     }
 }

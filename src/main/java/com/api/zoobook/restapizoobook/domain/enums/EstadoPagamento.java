@@ -1,4 +1,4 @@
-package com.api.zoobook.restapizoobook.enums;
+package com.api.zoobook.restapizoobook.domain.enums;
 
 
 

@@ -1,14 +1,15 @@
 package com.api.zoobook.restapizoobook.domain;
 
-import com.api.zoobook.restapizoobook.enums.EstadoPagamento;
+import com.api.zoobook.restapizoobook.domain.enums.EstadoPagamento;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import javax.persistence.Entity;
-import javax.validation.constraints.NotEmpty;
 
 @Entity
-public class PagamentoComCartao extends Pagamento{
+@JsonTypeName("pagamentoComCartao")
+public class PagamentoComCartao extends Pagamento {
+    private static final long serialVersionUID = 1L;
 
-    @NotEmpty(message = "Este campo não pode ser vazio")
     private Integer numeroDeParcelas;
 
     public PagamentoComCartao() {
@@ -26,4 +27,7 @@ public class PagamentoComCartao extends Pagamento{
     public void setNumeroDeParcelas(Integer numeroDeParcelas) {
         this.numeroDeParcelas = numeroDeParcelas;
     }
+
+
+
 }

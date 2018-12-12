@@ -1,14 +1,14 @@
-package com.api.zoobook.restapizoobook.enums;
+package com.api.zoobook.restapizoobook.domain.enums;
 
-public enum TipoUsuario {
+public enum TipoCliente {
 
-    USUARIO(1, "Usuário"),
-    FORNECEDOR(2, "Fornecedor");
+    PESSOAFISICA(1, "Pessoa Fisica"),
+    PESSOAJURIDICA(2, "Pessoa Juridica");
 
     private int cod;
     private String descricao;
 
-    private TipoUsuario(int cod, String descricao){
+    private TipoCliente(int cod, String descricao){
         this.cod = cod;
         this.descricao = descricao;
     }
@@ -21,12 +21,12 @@ public enum TipoUsuario {
         return descricao;
     }
 
-    public static TipoUsuario toEnum(Integer cod){
+    public static TipoCliente toEnum(Integer cod){
         if(cod == null){
             return null;
         }
 
-        for (TipoUsuario x : TipoUsuario.values()){
+        for (TipoCliente x : TipoCliente.values()){
 
             if(cod.equals(x.getCod())){
                 return x;
