@@ -3,7 +3,8 @@ package com.api.zoobook.restapizoobook.domain.enums;
 public enum Perfil {
 
     ADMIN(1, "ROLE_ADMIN"),
-    CLIENTE(2, "ROLE_CLIENTE");
+    CLIENTE(2, "ROLE_CLIENTE"),
+    FORNECEDOR(3, "ROLE_FORNECEDOR");
 
     private int cod;
     private String descricao;

@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value="v1/estados")
-public class States {
+public class Estados {
 
     @Autowired
     private EstadoService service;

@@ -14,7 +14,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping(value="v1/pedidos")
-public class Orders {
+public class Pedidos {
 
     @Autowired
     private PedidoService service;
