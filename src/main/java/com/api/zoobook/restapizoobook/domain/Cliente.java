@@ -26,6 +26,7 @@ public class Cliente implements Serializable {
     private String cpfOuCnpj;
     private Integer tipo;
 
+
     @JsonIgnore
     private String senha;
 
@@ -138,6 +139,7 @@ public class Cliente implements Serializable {
     public void setPedidos(List<Pedido> pedidos) {
         this.pedidos = pedidos;
     }
+
 
     @Override
     public int hashCode() {

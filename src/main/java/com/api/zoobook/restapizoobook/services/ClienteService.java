@@ -60,6 +60,10 @@ public class ClienteService {
             throw new AuthorizationException("Acesso negado");
         }
 
+        if (user==null || !user.hasRole(Perfil.FORNECEDOR) && !id.equals(user.getId())) {
+            throw new AuthorizationException("Acesso negado");
+        }
+
         Optional<Cliente> obj = repo.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException(
                 "Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
@@ -99,6 +103,14 @@ public class ClienteService {
             throw new AuthorizationException("Acesso negado");
         }
 
+        if (user == null || !user.hasRole(Perfil.FORNECEDOR) && !email.equals(user.getUsername())) {
+            throw new AuthorizationException("Acesso negado");
+        }
+
+        if (user == null || user.hasRole(Perfil.SUSPENSO) && !email.equals(user.getUsername())) {
+            throw new AuthorizationException("Acesso negado");
+        }
+
         Cliente obj = repo.findByEmail(email);
         if (obj == null) {
             throw new ObjectNotFoundException(
@@ -135,6 +147,8 @@ public class ClienteService {
         newObj.setNome(obj.getNome());
         newObj.setEmail(obj.getEmail());
     }
+
+
 
     public URI uploadProfilePicture(MultipartFile multipartFile) {
         UserSS user = UserService.authenticated();
