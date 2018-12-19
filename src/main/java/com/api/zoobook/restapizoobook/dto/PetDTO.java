@@ -1,5 +1,6 @@
 package com.api.zoobook.restapizoobook.dto;
 
+import com.api.zoobook.restapizoobook.domain.Cliente;
 import com.api.zoobook.restapizoobook.domain.Pet;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.validator.constraints.Length;
@@ -22,14 +23,11 @@ public class PetDTO implements Serializable {
     @Length(min=5, max=50, message="O tamanho deve ser entre 5 e 50 caracteres")
     private String raca;
 
-    @NotEmpty(message="Preenchimento obrigatório")
-    private int idade;
+    private Integer idade;
 
-    @NotEmpty(message="Preenchimento obrigatório")
     @JsonFormat(pattern = "dd/MM/yyyy")
     private Date data_nascimento;
 
-    @NotEmpty(message="Preenchimento obrigatório")
     private double peso;
 
     @NotEmpty(message="Preenchimento obrigatório")
@@ -40,6 +38,15 @@ public class PetDTO implements Serializable {
 
     @NotEmpty(message="Preenchimento obrigatório")
     private boolean doacao;
+
+    private String foto;
+
+    @NotEmpty(message="Preenchimento obrigatório")
+    private Integer tipo;
+
+
+
+
 
     public PetDTO() {
     }
@@ -52,8 +59,13 @@ public class PetDTO implements Serializable {
         data_nascimento = obj.getData_nascimento();
         peso = obj.getPeso();
         filiacao = obj.getFiliacao();
+        tipo = obj.getTipo();
         aceita_relacionamento = obj.isAceita_relacionamento();
         doacao = obj.isDoacao();
+        foto = obj.getFoto();
+
+
+
     }
 
     public Integer getId() {
@@ -80,11 +92,11 @@ public class PetDTO implements Serializable {
         this.raca = raca;
     }
 
-    public int getIdade() {
+    public Integer getIdade() {
         return idade;
     }
 
-    public void setIdade(int idade) {
+    public void setIdade(Integer idade) {
         this.idade = idade;
     }
 
@@ -102,6 +114,14 @@ public class PetDTO implements Serializable {
 
     public void setPeso(double peso) {
         this.peso = peso;
+    }
+
+    public Integer getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(Integer tipo) {
+        this.tipo = tipo;
     }
 
     public String getFiliacao() {
@@ -127,4 +147,14 @@ public class PetDTO implements Serializable {
     public void setDoacao(boolean doacao) {
         this.doacao = doacao;
     }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
+
 }

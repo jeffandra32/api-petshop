@@ -1,0 +1,75 @@
+package com.api.zoobook.restapizoobook.domain.socialNetwork;
+
+import com.api.zoobook.restapizoobook.domain.Cliente;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Objects;
+
+@Entity
+public class PostLikes implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Integer id;
+
+    @JsonIgnore
+    @OneToOne
+    @JoinColumn(name="profile_pet_id")
+    private ProfilePet profilePet;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name="posts_usuario_id")
+    private PostsUsuario postsUsuario;
+
+
+
+    public PostLikes() {
+    }
+
+    public PostLikes(Integer id, ProfilePet profilePet, PostsUsuario postsUsuario) {
+        this.id = id;
+        this.profilePet = profilePet;
+        this.postsUsuario = postsUsuario;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PostLikes postLikes = (PostLikes) o;
+        return Objects.equals(id, postLikes.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public ProfilePet getProfilePet() {
+        return profilePet;
+    }
+
+    public void setProfilePet(ProfilePet profilePet) {
+        this.profilePet = profilePet;
+    }
+
+    public PostsUsuario getPostsUsuario() {
+        return postsUsuario;
+    }
+
+    public void setPostsUsuario(PostsUsuario postsUsuario) {
+        this.postsUsuario = postsUsuario;
+    }
+}

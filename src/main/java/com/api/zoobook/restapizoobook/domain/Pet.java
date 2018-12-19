@@ -1,13 +1,12 @@
 package com.api.zoobook.restapizoobook.domain;
 
+import com.api.zoobook.restapizoobook.domain.enums.TipoPet;
+import com.api.zoobook.restapizoobook.domain.socialNetwork.ProfilePet;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 public class Pet implements Serializable {
@@ -17,12 +16,11 @@ public class Pet implements Serializable {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
 
-
     private String nome;
 
     private String raça;
 
-    private int idade;
+    private Integer idade;
 
     private Date data_nascimento;
 
@@ -34,20 +32,27 @@ public class Pet implements Serializable {
 
     private boolean doacao;
 
-    @JsonIgnore
-    @ManyToMany
-    @JoinColumn(name="pet_id")
-    private List<PetCategoria> petCategorias = new ArrayList<>();
+    private String foto;
+
+    private Integer tipo;
 
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name="cliente_id")
     private Cliente cliente;
 
+    @JsonIgnore
+    @OneToOne
+    private ProfilePet profilePet;
+
+    @OneToMany(mappedBy="pet")
+    private List<Prontuario> prontuarios = new ArrayList<>();
+
     public Pet() {
     }
 
-    public Pet(Integer id, String nome, int tipo, String raça, int idade, Date data_nascimento, double peso, String filiacao, boolean aceita_relacionamento, boolean doacao, Cliente cliente) {
+    public Pet(Integer id, String nome, String raça, Integer idade, Date data_nascimento, double peso, String filiacao, TipoPet tipo, boolean aceita_relacionamento, boolean doacao, String foto, Cliente cliente) {
+        super();
         this.id = id;
         this.nome = nome;
         this.raça = raça;
@@ -55,9 +60,12 @@ public class Pet implements Serializable {
         this.data_nascimento = data_nascimento;
         this.peso = peso;
         this.filiacao = filiacao;
+        this.tipo = (tipo==null) ? null : tipo.getCod();
         this.aceita_relacionamento = aceita_relacionamento;
         this.doacao = doacao;
+        this.foto = foto;
         this.cliente = cliente;
+
     }
 
     @Override
@@ -72,6 +80,8 @@ public class Pet implements Serializable {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+
 
     public Integer getId() {
         return id;
@@ -97,11 +107,11 @@ public class Pet implements Serializable {
         this.raça = raça;
     }
 
-    public int getIdade() {
+    public Integer getIdade() {
         return idade;
     }
 
-    public void setIdade(int idade) {
+    public void setIdade(Integer idade) {
         this.idade = idade;
     }
 
@@ -117,7 +127,15 @@ public class Pet implements Serializable {
         return peso;
     }
 
-    public void setPeso(double peso) {
+    public List<Prontuario> getProntuarios() {
+        return prontuarios;
+    }
+
+    public void setProntuarios(List<Prontuario> prontuarios) {
+        this.prontuarios = prontuarios;
+    }
+
+    public void setPeso(Double peso) {
         this.peso = peso;
     }
 
@@ -137,6 +155,14 @@ public class Pet implements Serializable {
         this.aceita_relacionamento = aceita_relacionamento;
     }
 
+    public Integer getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(Integer tipo) {
+        this.tipo = tipo;
+    }
+
     public boolean isDoacao() {
         return doacao;
     }
@@ -145,12 +171,12 @@ public class Pet implements Serializable {
         this.doacao = doacao;
     }
 
-    public List<PetCategoria> getPetCategoriascategorias() {
-        return petCategorias;
+    public String getFoto() {
+        return foto;
     }
 
-    public void setPetCategoriascategorias(List<PetCategoria> petCategoriascategorias) {
-        this.petCategorias = petCategoriascategorias;
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 
     public Cliente getCliente() {
@@ -160,4 +186,5 @@ public class Pet implements Serializable {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
+
 }

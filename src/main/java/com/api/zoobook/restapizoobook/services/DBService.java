@@ -1,10 +1,9 @@
 package com.api.zoobook.restapizoobook.services;
-
 import com.api.zoobook.restapizoobook.domain.*;
-import com.api.zoobook.restapizoobook.domain.enums.EstadoPagamento;
-import com.api.zoobook.restapizoobook.domain.enums.Perfil;
-import com.api.zoobook.restapizoobook.domain.enums.TipoCliente;
+import com.api.zoobook.restapizoobook.domain.enums.*;
+import com.api.zoobook.restapizoobook.domain.socialNetwork.*;
 import com.api.zoobook.restapizoobook.repositores.*;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,6 +11,8 @@ import org.springframework.stereotype.Service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+
+import static java.time.OffsetDateTime.now;
 
 @Service
 public class DBService {
@@ -29,9 +30,27 @@ public class DBService {
     @Autowired
     private ClienteRepository clienteRepository;
     @Autowired
+    private PetRepository petRepository;
+    @Autowired
     private EnderecoRepository enderecoRepository;
     @Autowired
     private PedidoRepository pedidoRepository;
+
+    @Autowired
+    private PostUsuarioRepository postUsuarioRepository;
+
+    @Autowired
+    private PostLikesRepository postLikesRepository;
+
+    @Autowired
+    private CommentsRepository commentsRepository;
+
+    @Autowired
+    private FollowersRepository followersRepository;
+
+    @Autowired
+    private ProfilePetRepository profilePetRepository;
+
     @Autowired
     private PagamentoRepository pagamentoRepository;
     @Autowired
@@ -172,40 +191,64 @@ public class DBService {
 
         Estado est1 = new Estado(null, "Minas Gerais");
         Estado est2 = new Estado(null, "São Paulo");
+        Estado est3 = new Estado(null, "Paraíba");
 
         Cidade c1 = new Cidade(null, "Uberlândia", est1);
         Cidade c2 = new Cidade(null, "São Paulo", est2);
         Cidade c3 = new Cidade(null, "Campinas", est2);
+        Cidade c4 = new Cidade(null, "João Pessoa", est3);
 
         est1.getCidades().addAll(Arrays.asList(c1));
         est2.getCidades().addAll(Arrays.asList(c2, c3));
+        est3.getCidades().addAll(Arrays.asList(c4));
 
-        estadoRepository.saveAll(Arrays.asList(est1, est2));
-        cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
+        estadoRepository.saveAll(Arrays.asList(est1, est2, est3));
+        cidadeRepository.saveAll(Arrays.asList(c1, c2, c3, c4));
+
+        /**USER [USUARIO - ADMIN, FORNECEDOR - SUSPENSO]*/
 
         Cliente cli1 = new Cliente(null, "Jefferson Andrade", "jeff.teste@gmail.com", "07392408461", TipoCliente.PESSOAFISICA, pe.encode("123456"));
-
         cli1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
+        cli1.addPerfil(Perfil.CLIENTE);
 
         Cliente cli2 = new Cliente(null, "Ana Costa", "nelio.iftm@gmail.com", "31628382740", TipoCliente.PESSOAFISICA, pe.encode("123"));
         cli2.getTelefones().addAll(Arrays.asList("93883321", "34252625"));
         cli2.addPerfil(Perfil.ADMIN);
 
+        Cliente cli3 = new Cliente(null, "PET C&A", "pet@gmail.com", "44402576000150", TipoCliente.PESSOAJURIDICA, pe.encode("pet123"));
+        cli3.getTelefones().addAll(Arrays.asList("3233-0999", "8390000-0000"));
+        cli3.addPerfil(Perfil.FORNECEDOR);
+
+        /**PET [CANINOS - FELINOS - EQUINOS - AVES - PEIXES - REPTEIS - INSETOS - OUTROS]*/
+
+        SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy");
+
+        Pet pet1 = new Pet(null, "Toto",  "PitBull", 10, sdf2.parse("30/09/2017 10:32"), 15.5, "Jefferson", TipoPet.CANINOS, true, false, "Null", cli1);
+
+
+        /**ENDEREÇO*/
+
         Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Jardim", "38220834", cli1, c1);
         Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", cli1, c2);
         Endereco e3 = new Endereco(null, "Avenida Floriano", "2106", null, "Centro", "281777012", cli2, c2);
+        Endereco e4 = new Endereco(null, "Comercial Tereza", "211", null, "Geisel", "281777012", cli3, c4);
 
-        cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
+        cli1.getEnderecos().addAll(Arrays.asList(e1));
         cli2.getEnderecos().addAll(Arrays.asList(e3));
+        cli3.getEnderecos().addAll(Arrays.asList(e4));
 
-        clienteRepository.saveAll(Arrays.asList(cli1, cli2));
-        enderecoRepository.saveAll(Arrays.asList(e1, e2, e3));
+        clienteRepository.saveAll(Arrays.asList(cli1, cli2, cli3));
+        petRepository.saveAll(Arrays.asList(pet1));
+        enderecoRepository.saveAll(Arrays.asList(e1, e2, e3, e4));
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
+
+        /**PEDIDO*/
         Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, e1);
         Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cli1, e2);
 
+        /**PAGAMENTO*/
         Pagamento pagto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6);
         ped1.setPagamento(pagto1);
 
@@ -213,6 +256,7 @@ public class DBService {
         ped2.setPagamento(pagto2);
 
         cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
+        cli3.getPedidos().addAll(Arrays.asList(ped1, ped2));
 
         pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
         pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
@@ -229,5 +273,34 @@ public class DBService {
         p3.getItens().addAll(Arrays.asList(ip2));
 
         itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
+
+        /**SOCIAL NETWORK*/
+
+        /**PROFILE_PET*/
+
+        ProfilePet proP1 = new ProfilePet(null, pet1);
+        profilePetRepository.saveAll(Arrays.asList(proP1));
+
+
+
+        /**POST*/
+        SimpleDateFormat sdf3 = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        PostsUsuario pst1 = new PostsUsuario(null, "Poste de teste", sdf3.parse("19/01/2018 10:32"), 1 , "Imagem", "Topic", proP1);
+        postUsuarioRepository.saveAll(Arrays.asList(pst1));
+
+
+        /**LIKE*/
+        PostLikes like1 = new PostLikes(null, proP1, pst1);
+        postLikesRepository.saveAll(Arrays.asList(like1));
+
+
+        /**COMMENTS*/
+        Comments com1 = new Comments(null, "Muito Legal", sdf3.parse("19/01/2018 10:32"), proP1, pst1);
+        commentsRepository.saveAll(Arrays.asList(com1));
+
+
+        /**FOLLOWER*/
+        Followers for1 = new Followers(null, 1, proP1);
+        followersRepository.saveAll(Arrays.asList(for1));
     }
 }

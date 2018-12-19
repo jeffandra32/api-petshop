@@ -106,6 +106,7 @@ public class Endereco implements Serializable {
         this.cliente = cliente;
     }
 
+
     public Cidade getCidade() {
         return cidade;
     }

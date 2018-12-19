@@ -1,8 +1,6 @@
 package com.api.zoobook.restapizoobook.config;
 
-import com.api.zoobook.restapizoobook.security.JWTAuthenticationFilter;
-import com.api.zoobook.restapizoobook.security.JWTAuthorizationFilter;
-import com.api.zoobook.restapizoobook.security.JWTUtil;
+import com.api.zoobook.restapizoobook.security.*;
 import com.api.zoobook.restapizoobook.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -38,7 +36,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private JWTUtil jwtUtil;
 
     private static final String[] PUBLIC_MATCHERS = {
-            "/h2-console/**"
+            "/employeeReport.pdf**",
+            "/swagger-ui.html/**",
+            "/employeeReport.xlsx**"
+
     };
 
     private static final String[] PUBLIC_MATCHERS_GET = {
@@ -49,6 +50,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[] PUBLIC_MATCHERS_POST = {
             "/v1/users/**",
+            "/v1/pets/**",
+            "/v1/socialNetwork/**",
             "/v1/auth/forgot/**"
     };
 
@@ -79,6 +82,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
+
     }
 
     @Bean

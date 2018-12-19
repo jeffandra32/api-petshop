@@ -2,6 +2,10 @@ package com.api.zoobook.restapizoobook.domain;
 
 import com.api.zoobook.restapizoobook.domain.enums.Perfil;
 import com.api.zoobook.restapizoobook.domain.enums.TipoCliente;
+import com.api.zoobook.restapizoobook.domain.socialNetwork.Comments;
+import com.api.zoobook.restapizoobook.domain.socialNetwork.Followers;
+import com.api.zoobook.restapizoobook.domain.socialNetwork.PostLikes;
+import com.api.zoobook.restapizoobook.domain.socialNetwork.PostsUsuario;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -33,6 +37,7 @@ public class Cliente implements Serializable {
     @OneToMany(mappedBy="cliente", cascade=CascadeType.ALL)
     private List<Endereco> enderecos = new ArrayList<>();
 
+
     @ElementCollection
     @CollectionTable(name="TELEFONE")
     private Set<String> telefones = new HashSet<>();
@@ -45,8 +50,16 @@ public class Cliente implements Serializable {
     @OneToMany(mappedBy="cliente")
     private List<Pedido> pedidos = new ArrayList<>();
 
+    @JsonIgnore
+    @OneToMany(mappedBy="cliente")
+    private List<Agenda> agenda = new ArrayList<>();
+
+
+    @OneToMany(mappedBy="cliente")
+    private List<Pet> pets = new ArrayList<>();
+
     public Cliente() {
-        addPerfil(Perfil.CLIENTE);
+        addPerfil(Perfil.USUARIO);
     }
 
     public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo, String senha) {
@@ -57,7 +70,7 @@ public class Cliente implements Serializable {
         this.cpfOuCnpj = cpfOuCnpj;
         this.tipo = (tipo==null) ? null : tipo.getCod();
         this.senha = senha;
-        addPerfil(Perfil.CLIENTE);
+        addPerfil(Perfil.USUARIO);
     }
 
     public Integer getId() {
@@ -134,6 +147,22 @@ public class Cliente implements Serializable {
 
     public List<Pedido> getPedidos() {
         return pedidos;
+    }
+
+    public List<Agenda> getAgenda() {
+        return agenda;
+    }
+
+    public List<Pet> getPets() {
+        return pets;
+    }
+
+    public void setPets(List<Pet> pets) {
+        this.pets = pets;
+    }
+
+    public void setAgenda(List<Agenda> agenda) {
+        this.agenda = agenda;
     }
 
     public void setPedidos(List<Pedido> pedidos) {
