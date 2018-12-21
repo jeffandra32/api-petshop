@@ -3,12 +3,12 @@ package com.api.zoobook.restapizoobook.services;
 import com.api.zoobook.restapizoobook.domain.Cliente;
 import com.api.zoobook.restapizoobook.domain.ItemPedido;
 import com.api.zoobook.restapizoobook.domain.PagamentoComBoleto;
-import com.api.zoobook.restapizoobook.domain.Pedido;
+import com.api.zoobook.restapizoobook.domain.Servico;
 import com.api.zoobook.restapizoobook.domain.enums.EstadoPagamento;
 import com.api.zoobook.restapizoobook.exceptions.ObjectNotFoundException;
 import com.api.zoobook.restapizoobook.repositores.ItemPedidoRepository;
 import com.api.zoobook.restapizoobook.repositores.PagamentoRepository;
-import com.api.zoobook.restapizoobook.repositores.PedidoRepository;
+import com.api.zoobook.restapizoobook.repositores.ServicoRepository;
 import com.api.zoobook.restapizoobook.security.UserSS;
 import com.api.zoobook.restapizoobook.services.exceptions.AuthorizationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +21,10 @@ import java.util.Date;
 import java.util.Optional;
 
 @Service
-public class PedidoService {
+public class ServicoService {
 
     @Autowired
-    private PedidoRepository repo;
+    private ServicoRepository repo;
 
     @Autowired
     private BoletoService boletoService;
@@ -44,18 +44,18 @@ public class PedidoService {
 
     private EmailService emailService;
 
-    public Pedido find(Integer id) {
-        Optional<Pedido> obj = repo.findById(id);
+    public Servico find(Integer id) {
+        Optional<Servico> obj = repo.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException(
-                "Objeto não encontrado! Id: " + id + ", Tipo: " + Pedido.class.getName()));
+                "Objeto não encontrado! Id: " + id + ", Tipo: " + Servico.class.getName()));
     }
 
-    public Pedido insert(Pedido obj) {
+    public Servico insert(Servico obj) {
         obj.setId(null);
         obj.setInstante(new Date());
         obj.setCliente(clienteService.find(obj.getCliente().getId()));
         obj.getPagamento().setEstado(EstadoPagamento.PENDENTE);
-        obj.getPagamento().setPedido(obj);
+        obj.getPagamento().setServico(obj);
         if (obj.getPagamento() instanceof PagamentoComBoleto) {
             PagamentoComBoleto pagto = (PagamentoComBoleto) obj.getPagamento();
             boletoService.preencherPagamentoComBoleto(pagto, obj.getInstante());
@@ -73,7 +73,7 @@ public class PedidoService {
         return obj;
     }
 
-    public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+    public Page<Servico> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
         UserSS user = UserService.authenticated();
         if (user == null) {
             throw new AuthorizationException("Acesso negado");

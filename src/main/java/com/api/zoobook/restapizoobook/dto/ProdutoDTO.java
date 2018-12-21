@@ -2,14 +2,18 @@ package com.api.zoobook.restapizoobook.dto;
 
 import com.api.zoobook.restapizoobook.domain.Produto;
 
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
 public class ProdutoDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Integer id;
+    @NotEmpty(message = "Campo obrigatótio!")
     private String nome;
+    @NotEmpty(message = "Campo obrigatótio!")
     private Double preco;
+    private String imageUrl;
 
     public ProdutoDTO() {
     }
@@ -18,6 +22,7 @@ public class ProdutoDTO implements Serializable {
         id = obj.getId();
         nome = obj.getNome();
         preco = obj.getPreco();
+        imageUrl = obj.getImageUrl();
     }
 
     public Integer getId() {
@@ -42,5 +47,13 @@ public class ProdutoDTO implements Serializable {
 
     public void setPreco(Double preco) {
         this.preco = preco;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

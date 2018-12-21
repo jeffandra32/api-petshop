@@ -1,7 +1,7 @@
 package com.api.zoobook.restapizoobook.services;
 
 import com.api.zoobook.restapizoobook.domain.Cliente;
-import com.api.zoobook.restapizoobook.domain.Pedido;
+import com.api.zoobook.restapizoobook.domain.Servico;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 
@@ -13,16 +13,16 @@ public abstract class AbstractEmailService implements EmailService {
     private String sender;
 
     @Override
-    public void sendOrderConfirmationEmail(Pedido obj) {
+    public void sendOrderConfirmationEmail(Servico obj) {
         SimpleMailMessage sm = prepareSimpleMailMessageFromPedido(obj);
         sendEmail(sm);
     }
 
-    protected SimpleMailMessage prepareSimpleMailMessageFromPedido(Pedido obj) {
+    protected SimpleMailMessage prepareSimpleMailMessageFromPedido(Servico obj) {
         SimpleMailMessage sm = new SimpleMailMessage();
         sm.setTo(obj.getCliente().getEmail());
         sm.setFrom(sender);
-        sm.setSubject("Pedido confirmado! Código: " + obj.getId());
+        sm.setSubject("Servico confirmado! Código: " + obj.getId());
         sm.setSentDate(new Date(System.currentTimeMillis()));
         sm.setText(obj.toString());
         return sm;

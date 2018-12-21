@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value="v1/estados")
+@RequestMapping(value="v2/estados")
 public class Estados {
 
     @Autowired

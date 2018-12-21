@@ -1,5 +1,7 @@
 package com.api.zoobook.restapizoobook.dto;
 
+import com.api.zoobook.restapizoobook.domain.DBFile;
+import com.api.zoobook.restapizoobook.domain.Pet;
 import com.api.zoobook.restapizoobook.domain.Prontuario;
 
 import javax.validation.constraints.NotEmpty;
@@ -12,30 +14,26 @@ public class ProntuarioDTO implements Serializable {
 
     private Integer id;
 
-    //@NotEmpty(message="Preenchimento obrigatório")
+    @NotEmpty(message="Preenchimento obrigatório")
     private String veterinario;
 
-    //@NotEmpty(message="Preenchimento obrigatório")
+    @NotEmpty(message="Preenchimento obrigatório")
     private String logradouro;
 
-    //@NotEmpty(message="Preenchimento obrigatório")
+    @NotEmpty(message="Preenchimento obrigatório")
     private String numero;
+
     private String complemento;
 
-    //@NotEmpty(message="Preenchimento obrigatório")
+    @NotEmpty(message="Preenchimento obrigatório")
     private String bairro;
 
-    //@NotEmpty(message="Preenchimento obrigatório")
+    @NotEmpty(message="Preenchimento obrigatório")
     private String cep;
 
-    private File exames;
+    private DBFile dbFile;
 
-    //@NotEmpty(message="Preenchimento obrigatório")
-    private String telefone1;
-
-    private String telefone2;
-
-    private String telefone3;
+    private Pet pet;
 
     public ProntuarioDTO() {
     }
@@ -48,7 +46,9 @@ public class ProntuarioDTO implements Serializable {
         complemento = obj.getComplemento();
         bairro = obj.getBairro();
         cep = obj.getCep();
-        exames = obj.getExames();
+        dbFile = obj.getDbFile();
+        pet = obj.getPet();
+
     }
 
     public Integer getId() {
@@ -107,35 +107,19 @@ public class ProntuarioDTO implements Serializable {
         this.cep = cep;
     }
 
-    public File getExames() {
-        return exames;
+    public DBFile getDbFile() {
+        return dbFile;
     }
 
-    public void setExames(File exames) {
-        this.exames = exames;
+    public void setDbFile(DBFile dbFile) {
+        this.dbFile = dbFile;
     }
 
-    public String getTelefone1() {
-        return telefone1;
+    public Pet getPet() {
+        return pet;
     }
 
-    public void setTelefone1(String telefone1) {
-        this.telefone1 = telefone1;
-    }
-
-    public String getTelefone2() {
-        return telefone2;
-    }
-
-    public void setTelefone2(String telefone2) {
-        this.telefone2 = telefone2;
-    }
-
-    public String getTelefone3() {
-        return telefone3;
-    }
-
-    public void setTelefone3(String telefone3) {
-        this.telefone3 = telefone3;
+    public void setPet(Pet pet) {
+        this.pet = pet;
     }
 }

@@ -5,6 +5,7 @@ import com.api.zoobook.restapizoobook.domain.socialNetwork.ProfilePet;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.File;
 import java.io.Serializable;
 import java.util.*;
 
@@ -32,7 +33,7 @@ public class Pet implements Serializable {
 
     private boolean doacao;
 
-    private String foto;
+    private String imageUrl;
 
     private Integer tipo;
 
@@ -45,13 +46,14 @@ public class Pet implements Serializable {
     @OneToOne
     private ProfilePet profilePet;
 
+    @JsonIgnore
     @OneToMany(mappedBy="pet")
     private List<Prontuario> prontuarios = new ArrayList<>();
 
     public Pet() {
     }
 
-    public Pet(Integer id, String nome, String raça, Integer idade, Date data_nascimento, double peso, String filiacao, TipoPet tipo, boolean aceita_relacionamento, boolean doacao, String foto, Cliente cliente) {
+    public Pet(Integer id, String nome, String raça, Integer idade, Date data_nascimento, double peso, String filiacao, TipoPet tipo, boolean aceita_relacionamento, boolean doacao,  Cliente cliente) {
         super();
         this.id = id;
         this.nome = nome;
@@ -63,7 +65,6 @@ public class Pet implements Serializable {
         this.tipo = (tipo==null) ? null : tipo.getCod();
         this.aceita_relacionamento = aceita_relacionamento;
         this.doacao = doacao;
-        this.foto = foto;
         this.cliente = cliente;
 
     }
@@ -171,12 +172,12 @@ public class Pet implements Serializable {
         this.doacao = doacao;
     }
 
-    public String getFoto() {
-        return foto;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setFoto(String foto) {
-        this.foto = foto;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public Cliente getCliente() {

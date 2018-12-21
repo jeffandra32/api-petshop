@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 
 @RestController
-@RequestMapping(value = "v1/socialNetwork")
+@RequestMapping(value = "v2/socialNetwork")
 public class SocialNetwork {
 
     @Autowired

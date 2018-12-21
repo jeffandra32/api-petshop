@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 
 @RestController
-@RequestMapping(value = "v1/users")
+@RequestMapping(value = "v2/users")
 public class Usuarios {
 
     @Autowired
@@ -87,4 +87,5 @@ public class Usuarios {
         URI uri = service.uploadProfilePicture(file);
         return ResponseEntity.created(uri).build();
     }
+
 }

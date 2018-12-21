@@ -1,9 +1,7 @@
 package com.api.zoobook.restapizoobook.resources;
 
 
-import com.api.zoobook.restapizoobook.domain.Cliente;
 import com.api.zoobook.restapizoobook.domain.Pet;
-import com.api.zoobook.restapizoobook.dto.ClienteDTO;
 import com.api.zoobook.restapizoobook.dto.PetDTO;
 import com.api.zoobook.restapizoobook.services.PetService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
@@ -20,7 +19,7 @@ import java.util.stream.Collectors;
 
 
 @RestController
-@RequestMapping(value = "v1/pets")
+@RequestMapping(value = "v2/pets")
 public class Pets {
 
     @Autowired
@@ -73,5 +72,11 @@ public class Pets {
             @RequestParam(value="direction", defaultValue="DESC") String direction) {
         Page<Pet> list = service.findPage(page, linesPerPage, orderBy, direction);
         return ResponseEntity.ok().body(list);
+    }
+
+    @RequestMapping(value="/photo", method=RequestMethod.POST)
+    public ResponseEntity<Void> uploadProfilePicture(@RequestParam(name="file") MultipartFile file) {
+        URI uri = service.uploadProfilePicture(file);
+        return ResponseEntity.created(uri).build();
     }
 }

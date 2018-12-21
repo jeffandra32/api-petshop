@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class ReportControllerTest {
+public class RelatorioTest {
 
     @MockBean
     private EmployeeRepository employeeRepository;
@@ -31,7 +31,7 @@ public class ReportControllerTest {
     @Autowired
     private TestDataService testDataService;
 
-    public ReportControllerTest() {
+    public RelatorioTest() {
 
     }
 

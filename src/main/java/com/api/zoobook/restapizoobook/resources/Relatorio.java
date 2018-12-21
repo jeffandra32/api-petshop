@@ -18,14 +18,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Controller
-@RequestMapping("/")
-public class ReportController {
+@RequestMapping("/v2/")
+public class Relatorio {
 
     private final EmployeeRepository employeeRepository;
     private final ReportService reportService;
 
     @Autowired
-    public ReportController(final EmployeeRepository employeeRepository, final ReportService reportService){
+    public Relatorio(final EmployeeRepository employeeRepository, final ReportService reportService){
         this.employeeRepository = employeeRepository;
         this.reportService = reportService;
     }
@@ -35,7 +35,7 @@ public class ReportController {
         return "redirect:/employeeReport.pdf";
     }
 
-    @GetMapping(value = "/employeeReport.pdf", produces = MediaType.APPLICATION_PDF_VALUE)
+    @GetMapping(value = "/relatorioCliente.pdf", produces = MediaType.APPLICATION_PDF_VALUE)
     @ResponseBody
     public HttpEntity<byte[]> getEmployeeReportPdf(final HttpServletResponse response) throws JRException, IOException, ClassNotFoundException {
         final EmployeeReport report = new EmployeeReport(employeeRepository.findAll());
@@ -50,7 +50,7 @@ public class ReportController {
     }
 
 
-    @GetMapping(value = "/employeeReport.xlsx", produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    @GetMapping(value = "/relatorioCliente.xlsx", produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
     @ResponseBody
     public HttpEntity<byte[]> getEmployeeReportXlsx(final HttpServletResponse response) throws JRException, IOException, ClassNotFoundException {
         final EmployeeReport report = new EmployeeReport(employeeRepository.findAll());

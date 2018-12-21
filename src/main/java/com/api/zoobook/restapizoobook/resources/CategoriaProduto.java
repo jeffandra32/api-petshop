@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 
 @RestController
-@RequestMapping(value = "v1/categorias")
+@RequestMapping(value = "v2/categorias")
 public class CategoriaProduto {
 
     @Autowired

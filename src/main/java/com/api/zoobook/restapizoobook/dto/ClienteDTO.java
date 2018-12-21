@@ -2,6 +2,7 @@ package com.api.zoobook.restapizoobook.dto;
 
 import com.api.zoobook.restapizoobook.domain.Cliente;
 import com.api.zoobook.restapizoobook.services.validation.ClienteUpdate;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
@@ -12,6 +13,7 @@ import java.io.Serializable;
 public class ClienteDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @JsonIgnore
     private Integer id;
 
     @NotEmpty(message="Preenchimento obrigatório")

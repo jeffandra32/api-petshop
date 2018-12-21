@@ -13,6 +13,7 @@ import com.api.zoobook.restapizoobook.security.UserSS;
 import com.api.zoobook.restapizoobook.services.exceptions.AuthorizationException;
 import com.api.zoobook.restapizoobook.services.exceptions.DataIntegrityException;
 import com.api.zoobook.restapizoobook.services.exceptions.ObjectNotFoundException;
+import org.glassfish.jersey.server.Uri;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -72,6 +73,13 @@ public class ClienteService {
         enderecoRepository.saveAll(obj.getEnderecos());
         return obj;
     }
+
+    @Transactional
+    public Cliente insertLogin(Cliente obj) {
+        obj = repo.save(obj);
+        return obj;
+    }
+
 
     public Cliente update(Cliente obj) {
         Cliente newObj = find(obj.getId());
@@ -144,8 +152,6 @@ public class ClienteService {
         newObj.setEmail(obj.getEmail());
     }
 
-
-
     public URI uploadProfilePicture(MultipartFile multipartFile) {
         UserSS user = UserService.authenticated();
         if (user == null) {
@@ -158,6 +164,10 @@ public class ClienteService {
 
         String fileName = prefix + user.getId() + ".jpg";
 
+        URI uri = s3Service.uploadFile(multipartFile);
+
         return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
+
     }
+
 }

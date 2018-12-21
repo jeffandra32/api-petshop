@@ -1,6 +1,5 @@
 package com.api.zoobook.restapizoobook.dto;
 
-import com.api.zoobook.restapizoobook.domain.Cliente;
 import com.api.zoobook.restapizoobook.domain.Pet;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.validator.constraints.Length;
@@ -39,14 +38,10 @@ public class PetDTO implements Serializable {
     @NotEmpty(message="Preenchimento obrigatório")
     private boolean doacao;
 
-    private String foto;
-
     @NotEmpty(message="Preenchimento obrigatório")
     private Integer tipo;
 
-
-
-
+    private String imageUrl;
 
     public PetDTO() {
     }
@@ -62,9 +57,7 @@ public class PetDTO implements Serializable {
         tipo = obj.getTipo();
         aceita_relacionamento = obj.isAceita_relacionamento();
         doacao = obj.isDoacao();
-        foto = obj.getFoto();
-
-
+        imageUrl = obj.getImageUrl();
 
     }
 
@@ -148,13 +141,11 @@ public class PetDTO implements Serializable {
         this.doacao = doacao;
     }
 
-    public String getFoto() {
-        return foto;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setFoto(String foto) {
-        this.foto = foto;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
-
-
 }

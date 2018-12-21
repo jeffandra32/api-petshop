@@ -21,16 +21,16 @@ public abstract class Pagamento implements Serializable {
     @OneToOne
     @JoinColumn(name="pedido_id")
     @MapsId
-    private Pedido pedido;
+    private Servico servico;
 
     public Pagamento() {
     }
 
-    public Pagamento(Integer id, EstadoPagamento estado, Pedido pedido) {
+    public Pagamento(Integer id, EstadoPagamento estado, Servico servico) {
         super();
         this.id = id;
         this.estado = (estado==null) ? null : estado.getCod();
-        this.pedido = pedido;
+        this.servico = servico;
     }
 
     public Integer getId() {
@@ -49,12 +49,12 @@ public abstract class Pagamento implements Serializable {
         this.estado = estado.getCod();
     }
 
-    public Pedido getPedido() {
-        return pedido;
+    public Servico getServico() {
+        return servico;
     }
 
-    public void setPedido(Pedido pedido) {
-        this.pedido = pedido;
+    public void setServico(Servico servico) {
+        this.servico = servico;
     }
 
     @Override

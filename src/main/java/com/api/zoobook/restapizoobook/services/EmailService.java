@@ -1,12 +1,12 @@
 package com.api.zoobook.restapizoobook.services;
 
 import com.api.zoobook.restapizoobook.domain.Cliente;
-import com.api.zoobook.restapizoobook.domain.Pedido;
+import com.api.zoobook.restapizoobook.domain.Servico;
 import org.springframework.mail.SimpleMailMessage;
 
 public interface EmailService {
 
-    void sendOrderConfirmationEmail(Pedido obj);
+    void sendOrderConfirmationEmail(Servico obj);
 
     void sendEmail(SimpleMailMessage msg);
 

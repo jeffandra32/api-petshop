@@ -1,9 +1,12 @@
 package com.api.zoobook.restapizoobook.services;
 import com.api.zoobook.restapizoobook.domain.*;
-import com.api.zoobook.restapizoobook.domain.enums.*;
+import com.api.zoobook.restapizoobook.domain.agenda.Eventos;
+import com.api.zoobook.restapizoobook.domain.enums.EstadoPagamento;
+import com.api.zoobook.restapizoobook.domain.enums.Perfil;
+import com.api.zoobook.restapizoobook.domain.enums.TipoCliente;
+import com.api.zoobook.restapizoobook.domain.enums.TipoPet;
 import com.api.zoobook.restapizoobook.domain.socialNetwork.*;
 import com.api.zoobook.restapizoobook.repositores.*;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -11,8 +14,6 @@ import org.springframework.stereotype.Service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
-
-import static java.time.OffsetDateTime.now;
 
 @Service
 public class DBService {
@@ -34,7 +35,14 @@ public class DBService {
     @Autowired
     private EnderecoRepository enderecoRepository;
     @Autowired
-    private PedidoRepository pedidoRepository;
+    private ServicoRepository servicoRepository;
+
+
+    @Autowired
+    private ProntuarioRepository prontuarioRepository;
+
+    @Autowired
+    private EventosRepository eventosRepository;
 
     @Autowired
     private PostUsuarioRepository postUsuarioRepository;
@@ -222,8 +230,14 @@ public class DBService {
         /**PET [CANINOS - FELINOS - EQUINOS - AVES - PEIXES - REPTEIS - INSETOS - OUTROS]*/
 
         SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy");
+        Pet pet1 = new Pet(null, "Toto",  "PitBull", 10, sdf2.parse("30/09/2017 10:32"), 15.5, "Jefferson", TipoPet.CANINOS, true, false,  cli1);
 
-        Pet pet1 = new Pet(null, "Toto",  "PitBull", 10, sdf2.parse("30/09/2017 10:32"), 15.5, "Jefferson", TipoPet.CANINOS, true, false, "Null", cli1);
+
+        /**PRONTUARIO */
+
+        Prontuario pront1 = new Prontuario(null, "PET C&A", "Rua Teste", "10", "Casa", "Geisel", "58000-000", null, pet1);
+        pront1.getTelefones().addAll(Arrays.asList("3233-0999", "8390000-0000"));
+
 
 
         /**ENDEREÇO*/
@@ -239,14 +253,20 @@ public class DBService {
 
         clienteRepository.saveAll(Arrays.asList(cli1, cli2, cli3));
         petRepository.saveAll(Arrays.asList(pet1));
+        prontuarioRepository.saveAll(Arrays.asList(pront1));
         enderecoRepository.saveAll(Arrays.asList(e1, e2, e3, e4));
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
+        /**EVENTOS*/
+
+        Eventos eve1 = new Eventos(null,"PET C&A", "10/10/2000", "10/10/2000");
+        eventosRepository.saveAll(Arrays.asList(eve1));
+
 
         /**PEDIDO*/
-        Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, e1);
-        Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cli1, e2);
+        Servico ped1 = new Servico(null, sdf.parse("30/09/2017 10:32"), cli1, eve1, e1);
+        Servico ped2 = new Servico(null, sdf.parse("10/10/2017 19:35"), cli1, eve1, e2);
 
         /**PAGAMENTO*/
         Pagamento pagto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6);
@@ -255,10 +275,10 @@ public class DBService {
         Pagamento pagto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("20/10/2017 00:00"), null);
         ped2.setPagamento(pagto2);
 
-        cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
-        cli3.getPedidos().addAll(Arrays.asList(ped1, ped2));
+        cli1.getServicos().addAll(Arrays.asList(ped1, ped2));
+        cli3.getServicos().addAll(Arrays.asList(ped1, ped2));
 
-        pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
+        servicoRepository.saveAll(Arrays.asList(ped1, ped2));
         pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
 
         ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);

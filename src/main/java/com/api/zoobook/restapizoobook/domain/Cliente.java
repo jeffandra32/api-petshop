@@ -2,10 +2,6 @@ package com.api.zoobook.restapizoobook.domain;
 
 import com.api.zoobook.restapizoobook.domain.enums.Perfil;
 import com.api.zoobook.restapizoobook.domain.enums.TipoCliente;
-import com.api.zoobook.restapizoobook.domain.socialNetwork.Comments;
-import com.api.zoobook.restapizoobook.domain.socialNetwork.Followers;
-import com.api.zoobook.restapizoobook.domain.socialNetwork.PostLikes;
-import com.api.zoobook.restapizoobook.domain.socialNetwork.PostsUsuario;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -29,6 +25,7 @@ public class Cliente implements Serializable {
     private String email;
     private String cpfOuCnpj;
     private Integer tipo;
+    private String imageUrl;
 
 
     @JsonIgnore
@@ -48,11 +45,7 @@ public class Cliente implements Serializable {
 
     @JsonIgnore
     @OneToMany(mappedBy="cliente")
-    private List<Pedido> pedidos = new ArrayList<>();
-
-    @JsonIgnore
-    @OneToMany(mappedBy="cliente")
-    private List<Agenda> agenda = new ArrayList<>();
+    private List<Servico> servicos = new ArrayList<>();
 
 
     @OneToMany(mappedBy="cliente")
@@ -105,6 +98,14 @@ public class Cliente implements Serializable {
         this.cpfOuCnpj = cpfOuCnpj;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     public TipoCliente getTipo() {
         return TipoCliente.toEnum(tipo);
     }
@@ -145,12 +146,8 @@ public class Cliente implements Serializable {
         this.telefones = telefones;
     }
 
-    public List<Pedido> getPedidos() {
-        return pedidos;
-    }
-
-    public List<Agenda> getAgenda() {
-        return agenda;
+    public List<Servico> getServicos() {
+        return servicos;
     }
 
     public List<Pet> getPets() {
@@ -161,12 +158,8 @@ public class Cliente implements Serializable {
         this.pets = pets;
     }
 
-    public void setAgenda(List<Agenda> agenda) {
-        this.agenda = agenda;
-    }
-
-    public void setPedidos(List<Pedido> pedidos) {
-        this.pedidos = pedidos;
+    public void setServicos(List<Servico> servicos) {
+        this.servicos = servicos;
     }
 
 

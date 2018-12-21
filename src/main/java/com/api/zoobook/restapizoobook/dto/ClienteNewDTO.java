@@ -1,5 +1,6 @@
 package com.api.zoobook.restapizoobook.dto;
 
+import com.api.zoobook.restapizoobook.domain.DBFile;
 import com.api.zoobook.restapizoobook.services.validation.ClienteInsert;
 import org.hibernate.validator.constraints.Length;
 
@@ -49,6 +50,8 @@ public class ClienteNewDTO implements Serializable {
     private String telefone3;
 
     private Integer cidadeId;
+
+    private DBFile dbFile;
 
     public ClienteNewDTO() {
     }
@@ -163,5 +166,13 @@ public class ClienteNewDTO implements Serializable {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public DBFile getDbFile() {
+        return dbFile;
+    }
+
+    public void setDbFile(DBFile dbFile) {
+        this.dbFile = dbFile;
     }
 }

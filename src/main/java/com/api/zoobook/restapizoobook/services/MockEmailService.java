@@ -1,6 +1,6 @@
 package com.api.zoobook.restapizoobook.services;
 
-import com.api.zoobook.restapizoobook.domain.Pedido;
+import com.api.zoobook.restapizoobook.domain.Servico;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.SimpleMailMessage;
@@ -10,7 +10,7 @@ public class MockEmailService extends AbstractEmailService {
     private static final Logger LOG = LoggerFactory.getLogger(MockEmailService.class);
 
     @Override
-    public void sendOrderConfirmationEmail(Pedido obj) {
+    public void sendOrderConfirmationEmail(Servico obj) {
 
     }
 

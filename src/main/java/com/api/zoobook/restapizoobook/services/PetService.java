@@ -8,12 +8,16 @@ import com.api.zoobook.restapizoobook.security.UserSS;
 import com.api.zoobook.restapizoobook.services.exceptions.AuthorizationException;
 import com.api.zoobook.restapizoobook.services.exceptions.DataIntegrityException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.image.BufferedImage;
+import java.net.URI;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +29,19 @@ public class PetService {
     private PetRepository repo;
 
     @Autowired
+    private S3Service s3Service;
+
+    @Autowired
     private ClienteService clienteService;
+
+    @Autowired
+    private ImageService imageService;
+
+    @Value("${img.prefix.client.profile}")
+    private String prefix;
+
+    @Value("${img.profile.size}")
+    private Integer size;
 
 
     public Pet find(Integer id) {
@@ -42,7 +58,6 @@ public class PetService {
         obj.setFiliacao(null);
         obj.setNome(null);
         obj.setRaça(null);
-        obj.setFoto(null);
         obj.setIdade(null);
         obj.setTipo(null);
         obj.setCliente(clienteService.find(obj.getCliente().getId()));
@@ -75,7 +90,7 @@ public class PetService {
         return new Pet(objDto.getId(), objDto.getNome(), objDto.getRaca(),
                 objDto.getIdade(), objDto.getData_nascimento(),
                 objDto.getPeso(), objDto.getFiliacao(), null, objDto.isAceita_relacionamento(),
-                objDto.isDoacao(), objDto.getFoto(), null);
+                objDto.isDoacao(), null);
     }
 
 
@@ -98,7 +113,25 @@ public class PetService {
         newObj.setFiliacao(obj.getFiliacao());
         newObj.setAceita_relacionamento(obj.isAceita_relacionamento());
         newObj.setDoacao(obj.isDoacao());
-        newObj.setFoto(obj.getFoto());
+        newObj.setImageUrl(obj.getImageUrl());
         newObj.setTipo(obj.getTipo());
+    }
+
+    public URI uploadProfilePicture(MultipartFile multipartFile) {
+        UserSS user = UserService.authenticated();
+        if (user == null) {
+            throw new AuthorizationException("Acesso negado");
+        }
+
+        BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+        jpgImage = imageService.cropSquare(jpgImage);
+        jpgImage = imageService.resize(jpgImage, size);
+
+        String fileName = prefix + user.getId() + ".jpg";
+
+        URI uri = s3Service.uploadFile(multipartFile);
+
+        return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
+
     }
 }

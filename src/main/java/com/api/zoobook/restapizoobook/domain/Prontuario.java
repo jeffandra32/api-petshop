@@ -3,7 +3,6 @@ package com.api.zoobook.restapizoobook.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.io.File;
 import java.io.Serializable;
 import java.util.*;
 
@@ -24,7 +23,8 @@ public class Prontuario implements Serializable {
     private String bairro;
     private String cep;
 
-    private File exames;
+    @OneToOne
+    private DBFile dbFile;
 
     @ElementCollection
     @CollectionTable(name="TELEFONE_PRONTUARIO")
@@ -41,7 +41,7 @@ public class Prontuario implements Serializable {
     public Prontuario() {
     }
 
-    public Prontuario(Integer id, String veterinario, String logradouro, String numero, String complemento, String bairro, String cep, File exames, Pet pet) {
+    public Prontuario(Integer id, String veterinario, String logradouro, String numero, String complemento, String bairro, String cep, DBFile dbFile, Pet pet) {
         this.id = id;
         this.veterinario = veterinario;
         this.logradouro = logradouro;
@@ -49,7 +49,7 @@ public class Prontuario implements Serializable {
         this.complemento = complemento;
         this.bairro = bairro;
         this.cep = cep;
-        this.exames = exames;
+        this.dbFile = dbFile;
         this.pet = pet;
     }
 
@@ -122,12 +122,12 @@ public class Prontuario implements Serializable {
         this.cep = cep;
     }
 
-    public File getExames() {
-        return exames;
+    public DBFile getDbFile() {
+        return dbFile;
     }
 
-    public void setExames(File exames) {
-        this.exames = exames;
+    public void setDbFile(DBFile dbFile) {
+        this.dbFile = dbFile;
     }
 
     public Set<String> getTelefones() {

@@ -27,6 +27,8 @@ public class Produto  implements Serializable {
     private String nome;
     private Double preco;
 
+    private String imageUrl;
+
     @JsonIgnore
     @ManyToMany
     @JoinTable(name = "PRODUTO_CATEGORIA",
@@ -50,8 +52,8 @@ public class Produto  implements Serializable {
     }
 
     @JsonIgnore
-    public List<Pedido> getPedidos() {
-        List<Pedido> lista = new ArrayList<>();
+    public List<Servico> getPedidos() {
+        List<Servico> lista = new ArrayList<>();
         for (ItemPedido x : itens) {
             lista.add(x.getPedido());
         }
@@ -97,6 +99,14 @@ public class Produto  implements Serializable {
 
     public void setItens(Set<ItemPedido> itens) {
         this.itens = itens;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     @Override
