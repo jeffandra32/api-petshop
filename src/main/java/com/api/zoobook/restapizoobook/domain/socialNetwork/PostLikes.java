@@ -1,6 +1,5 @@
 package com.api.zoobook.restapizoobook.domain.socialNetwork;
 
-import com.api.zoobook.restapizoobook.domain.Cliente;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -21,6 +20,11 @@ public class PostLikes implements Serializable {
     private ProfilePet profilePet;
 
     @JsonIgnore
+    @OneToOne
+    @JoinColumn(name="profile_fornecedor_id")
+    private ProfileFornecedor profileFornecedor;
+
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="posts_usuario_id")
     private PostsUsuario postsUsuario;
@@ -30,9 +34,10 @@ public class PostLikes implements Serializable {
     public PostLikes() {
     }
 
-    public PostLikes(Integer id, ProfilePet profilePet, PostsUsuario postsUsuario) {
+    public PostLikes(Integer id, ProfilePet profilePet, ProfileFornecedor profileFornecedor, PostsUsuario postsUsuario) {
         this.id = id;
         this.profilePet = profilePet;
+        this.profileFornecedor = profileFornecedor;
         this.postsUsuario = postsUsuario;
     }
 
@@ -63,6 +68,14 @@ public class PostLikes implements Serializable {
 
     public void setProfilePet(ProfilePet profilePet) {
         this.profilePet = profilePet;
+    }
+
+    public ProfileFornecedor getProfileFornecedor() {
+        return profileFornecedor;
+    }
+
+    public void setProfileFornecedor(ProfileFornecedor profileFornecedor) {
+        this.profileFornecedor = profileFornecedor;
     }
 
     public PostsUsuario getPostsUsuario() {

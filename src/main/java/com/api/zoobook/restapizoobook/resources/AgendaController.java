@@ -27,7 +27,7 @@ public class AgendaController {
     @RequestMapping(value = "/getEventos", method = RequestMethod.GET)
     public @ResponseBody List<Eventos> GetEventos(){
 
-        List<Eventos> eventos = new ArrayList();
+        List<Eventos> eventos = new ArrayList<Eventos>();
 
         String mesAtual = String.valueOf(Calendar.getInstance().get(Calendar.MONTH)+ 1);
 

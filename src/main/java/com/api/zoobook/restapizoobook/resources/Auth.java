@@ -1,7 +1,7 @@
 package com.api.zoobook.restapizoobook.resources;
 
-import com.api.zoobook.restapizoobook.domain.Cliente;
-import com.api.zoobook.restapizoobook.dto.ClienteDTO;
+import com.api.zoobook.restapizoobook.domain.Usuario;
+import com.api.zoobook.restapizoobook.dto.UsuarioDTO;
 import com.api.zoobook.restapizoobook.dto.ClienteNewDTO;
 import com.api.zoobook.restapizoobook.dto.EmailDTO;
 import com.api.zoobook.restapizoobook.security.JWTUtil;
@@ -34,15 +34,15 @@ public class Auth {
 
 
     @RequestMapping(method=RequestMethod.POST)
-    public ResponseEntity<Void> insertLogin(@Valid @RequestBody ClienteDTO objDto, @PathVariable Integer id) {
-        Cliente obj = service2.fromDTO(objDto);
+    public ResponseEntity<Void> insertLogin(@Valid @RequestBody UsuarioDTO objDto, @PathVariable Integer id) {
+        Usuario obj = service2.fromDTO(objDto);
         obj = service2.insert(obj);
         return ResponseEntity.noContent().build();
     }
 
     @RequestMapping(value = "/Register", method=RequestMethod.POST)
     public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDto) {
-        Cliente obj = service2.fromDTO(objDto);
+        Usuario obj = service2.fromDTO(objDto);
         obj = service2.insert(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(obj.getId()).toUri();

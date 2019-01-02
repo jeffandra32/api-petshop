@@ -1,6 +1,6 @@
 package com.api.zoobook.restapizoobook.dto;
 
-import com.api.zoobook.restapizoobook.domain.Pet;
+import com.api.zoobook.restapizoobook.domain.pet.Pet;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.validator.constraints.Length;
 
@@ -16,30 +16,30 @@ public class PetDTO implements Serializable {
 
     @NotEmpty(message="Preenchimento obrigatório")
     @Length(min=5, max=120, message="O tamanho deve ser entre 5 e 120 caracteres")
-    private String nome;
+    private String name;
 
     @NotEmpty(message="Preenchimento obrigatório")
     @Length(min=5, max=50, message="O tamanho deve ser entre 5 e 50 caracteres")
-    private String raca;
+    private String breed;
 
-    private Integer idade;
+    private Integer age;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
-    private Date data_nascimento;
+    private Date birthDate;
 
-    private double peso;
-
-    @NotEmpty(message="Preenchimento obrigatório")
-    private String filiacao;
+    private double weight;
 
     @NotEmpty(message="Preenchimento obrigatório")
-    private boolean aceita_relacionamento;
+    private String filiation;
 
     @NotEmpty(message="Preenchimento obrigatório")
-    private boolean doacao;
+    private boolean acceptRelationship;
 
     @NotEmpty(message="Preenchimento obrigatório")
-    private Integer tipo;
+    private boolean donation;
+
+    @NotEmpty(message="Preenchimento obrigatório")
+    private Integer type;
 
     private String imageUrl;
 
@@ -48,15 +48,15 @@ public class PetDTO implements Serializable {
 
     public PetDTO(Pet obj) {
         id = obj.getId();
-        nome = obj.getNome();
-        raca = obj.getRaça();
-        idade = obj.getIdade();
-        data_nascimento = obj.getData_nascimento();
-        peso = obj.getPeso();
-        filiacao = obj.getFiliacao();
-        tipo = obj.getTipo();
-        aceita_relacionamento = obj.isAceita_relacionamento();
-        doacao = obj.isDoacao();
+        name = obj.getName();
+        breed = obj.getBreed();
+        age = obj.getAge();
+        birthDate = obj.getBirthDate();
+        weight = obj.getWeight();
+        filiation = obj.getFiliation();
+        type = obj.getType();
+        acceptRelationship = obj.isAcceptRelationship();
+        donation = obj.isDonation();
         imageUrl = obj.getImageUrl();
 
     }
@@ -69,76 +69,76 @@ public class PetDTO implements Serializable {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getRaca() {
-        return raca;
+    public String getBreed() {
+        return breed;
     }
 
-    public void setRaca(String raca) {
-        this.raca = raca;
+    public void setBreed(String breed) {
+        this.breed = breed;
     }
 
-    public Integer getIdade() {
-        return idade;
+    public Integer getAge() {
+        return age;
     }
 
-    public void setIdade(Integer idade) {
-        this.idade = idade;
+    public void setAge(Integer age) {
+        this.age = age;
     }
 
-    public Date getData_nascimento() {
-        return data_nascimento;
+    public Date getBirthDate() {
+        return birthDate;
     }
 
-    public void setData_nascimento(Date data_nascimento) {
-        this.data_nascimento = data_nascimento;
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
 
-    public double getPeso() {
-        return peso;
+    public double getWeight() {
+        return weight;
     }
 
-    public void setPeso(double peso) {
-        this.peso = peso;
+    public void setWeight(double weight) {
+        this.weight = weight;
     }
 
-    public Integer getTipo() {
-        return tipo;
+    public String getFiliation() {
+        return filiation;
     }
 
-    public void setTipo(Integer tipo) {
-        this.tipo = tipo;
+    public void setFiliation(String filiation) {
+        this.filiation = filiation;
     }
 
-    public String getFiliacao() {
-        return filiacao;
+    public boolean isAcceptRelationship() {
+        return acceptRelationship;
     }
 
-    public void setFiliacao(String filiacao) {
-        this.filiacao = filiacao;
+    public void setAcceptRelationship(boolean acceptRelationship) {
+        this.acceptRelationship = acceptRelationship;
     }
 
-    public boolean isAceita_relacionamento() {
-        return aceita_relacionamento;
+    public boolean isDonation() {
+        return donation;
     }
 
-    public void setAceita_relacionamento(boolean aceita_relacionamento) {
-        this.aceita_relacionamento = aceita_relacionamento;
+    public void setDonation(boolean donation) {
+        this.donation = donation;
     }
 
-    public boolean isDoacao() {
-        return doacao;
+    public Integer getType() {
+        return type;
     }
 
-    public void setDoacao(boolean doacao) {
-        this.doacao = doacao;
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     public String getImageUrl() {

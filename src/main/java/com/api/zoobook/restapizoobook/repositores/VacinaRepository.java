@@ -1,6 +1,6 @@
 package com.api.zoobook.restapizoobook.repositores;
 
-import com.api.zoobook.restapizoobook.domain.Vacina;
+import com.api.zoobook.restapizoobook.domain.pet.Vacina;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

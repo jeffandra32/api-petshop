@@ -3,7 +3,6 @@ package com.api.zoobook.restapizoobook.resources.exceptions;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.model.AmazonS3Exception;
-import com.api.zoobook.restapizoobook.exceptions.DataIntegrityViolationException;
 import com.api.zoobook.restapizoobook.exceptions.ObjectNotFoundException;
 import com.api.zoobook.restapizoobook.services.exceptions.AuthorizationException;
 import com.api.zoobook.restapizoobook.services.exceptions.DataIntegrityException;

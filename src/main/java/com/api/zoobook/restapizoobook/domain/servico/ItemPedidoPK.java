@@ -1,4 +1,4 @@
-package com.api.zoobook.restapizoobook.domain;
+package com.api.zoobook.restapizoobook.domain.servico;
 
 import java.io.Serializable;
 

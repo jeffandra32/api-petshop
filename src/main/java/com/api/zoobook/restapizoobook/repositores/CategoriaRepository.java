@@ -1,6 +1,6 @@
 package com.api.zoobook.restapizoobook.repositores;
 
-import com.api.zoobook.restapizoobook.domain.Categoria;
+import com.api.zoobook.restapizoobook.domain.servico.Categoria;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

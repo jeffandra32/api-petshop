@@ -1,4 +1,4 @@
-package com.api.zoobook.restapizoobook.domain;
+package com.api.zoobook.restapizoobook.domain.servico;
 
 import java.io.Serializable;
 import java.text.NumberFormat;
@@ -17,24 +17,29 @@ public class ItemPedido implements Serializable {
     @EmbeddedId
     private ItemPedidoPK id = new ItemPedidoPK();
 
-    private Double desconto;
-    private Integer quantidade;
-    private Double preco;
+    /**  desconto
+     *  quantidade
+     *  preço
+     * */
+
+    private Double discount;
+    private Integer qtd;
+    private Double price;
 
     public ItemPedido() {
     }
 
-    public ItemPedido(Servico servico, Produto produto, Double desconto, Integer quantidade, Double preco) {
+    public ItemPedido(Servico servico, Produto produto, Double discount, Integer qtd, Double price) {
         super();
         id.setServico(servico);
         id.setProduto(produto);
-        this.desconto = desconto;
-        this.quantidade = quantidade;
-        this.preco = preco;
+        this.discount = discount;
+        this.qtd = qtd;
+        this.price = price;
     }
 
     public double getSubTotal() {
-        return (preco - desconto) * quantidade;
+        return (price - discount) * qtd;
     }
 
     @JsonIgnore
@@ -62,28 +67,28 @@ public class ItemPedido implements Serializable {
         this.id = id;
     }
 
-    public Double getDesconto() {
-        return desconto;
+    public Double getDiscount() {
+        return discount;
     }
 
-    public void setDesconto(Double desconto) {
-        this.desconto = desconto;
+    public void setDiscount(Double discount) {
+        this.discount = discount;
     }
 
-    public Integer getQuantidade() {
-        return quantidade;
+    public Integer getQtd() {
+        return qtd;
     }
 
-    public void setQuantidade(Integer quantidade) {
-        this.quantidade = quantidade;
+    public void setQtd(Integer qtd) {
+        this.qtd = qtd;
     }
 
-    public Double getPreco() {
-        return preco;
+    public Double getPrice() {
+        return price;
     }
 
-    public void setPreco(Double preco) {
-        this.preco = preco;
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     @Override
@@ -115,11 +120,11 @@ public class ItemPedido implements Serializable {
     public String toString() {
         NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
         StringBuilder builder = new StringBuilder();
-        builder.append(getProduto().getNome());
+        builder.append(getProduto().getName());
         builder.append(", Qte: ");
-        builder.append(getQuantidade());
+        builder.append(getQtd());
         builder.append(", Preço unitário: ");
-        builder.append(nf.format(getPreco()));
+        builder.append(nf.format(getPrice()));
         builder.append(", Subtotal: ");
         builder.append(nf.format(getSubTotal()));
         builder.append("\n");

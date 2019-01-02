@@ -1,11 +1,10 @@
 package com.api.zoobook.restapizoobook.dto;
 
 import com.api.zoobook.restapizoobook.domain.DBFile;
-import com.api.zoobook.restapizoobook.domain.Pet;
-import com.api.zoobook.restapizoobook.domain.Prontuario;
+import com.api.zoobook.restapizoobook.domain.pet.Pet;
+import com.api.zoobook.restapizoobook.domain.pet.Prontuario;
 
 import javax.validation.constraints.NotEmpty;
-import java.io.File;
 import java.io.Serializable;
 
 
@@ -15,18 +14,18 @@ public class ProntuarioDTO implements Serializable {
     private Integer id;
 
     @NotEmpty(message="Preenchimento obrigatório")
-    private String veterinario;
+    private String vet;
 
     @NotEmpty(message="Preenchimento obrigatório")
-    private String logradouro;
+    private String address;
 
     @NotEmpty(message="Preenchimento obrigatório")
-    private String numero;
+    private String number;
 
-    private String complemento;
+    private String complement;
 
     @NotEmpty(message="Preenchimento obrigatório")
-    private String bairro;
+    private String neighborhood;
 
     @NotEmpty(message="Preenchimento obrigatório")
     private String cep;
@@ -40,11 +39,11 @@ public class ProntuarioDTO implements Serializable {
 
     public ProntuarioDTO(Prontuario obj) {
         id = obj.getId();
-        veterinario = obj.getVeterinario();
-        logradouro = obj.getLogradouro();
-        numero = obj.getNumero();
-        complemento = obj.getComplemento();
-        bairro = obj.getBairro();
+        vet = obj.getVet();
+        address = obj.getAddress();
+        number = obj.getNumber();
+        complement = obj.getComplement();
+        neighborhood = obj.getNeighborhood();
         cep = obj.getCep();
         dbFile = obj.getDbFile();
         pet = obj.getPet();
@@ -59,44 +58,44 @@ public class ProntuarioDTO implements Serializable {
         this.id = id;
     }
 
-    public String getVeterinario() {
-        return veterinario;
+    public String getVet() {
+        return vet;
     }
 
-    public void setVeterinario(String veterinario) {
-        this.veterinario = veterinario;
+    public void setVet(String vet) {
+        this.vet = vet;
     }
 
-    public String getLogradouro() {
-        return logradouro;
+    public String getAddress() {
+        return address;
     }
 
-    public void setLogradouro(String logradouro) {
-        this.logradouro = logradouro;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getNumero() {
-        return numero;
+    public String getNumber() {
+        return number;
     }
 
-    public void setNumero(String numero) {
-        this.numero = numero;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
-    public String getComplemento() {
-        return complemento;
+    public String getComplement() {
+        return complement;
     }
 
-    public void setComplemento(String complemento) {
-        this.complemento = complemento;
+    public void setComplement(String complement) {
+        this.complement = complement;
     }
 
-    public String getBairro() {
-        return bairro;
+    public String getNeighborhood() {
+        return neighborhood;
     }
 
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
+    public void setNeighborhood(String neighborhood) {
+        this.neighborhood = neighborhood;
     }
 
     public String getCep() {

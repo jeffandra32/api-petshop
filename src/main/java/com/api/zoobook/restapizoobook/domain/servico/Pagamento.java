@@ -1,4 +1,4 @@
-package com.api.zoobook.restapizoobook.domain;
+package com.api.zoobook.restapizoobook.domain.servico;
 
 import com.api.zoobook.restapizoobook.domain.enums.EstadoPagamento;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -15,7 +15,7 @@ public abstract class Pagamento implements Serializable {
 
     @Id
     private Integer id;
-    private Integer estado;
+    private Integer status;
 
     @JsonIgnore
     @OneToOne
@@ -26,10 +26,10 @@ public abstract class Pagamento implements Serializable {
     public Pagamento() {
     }
 
-    public Pagamento(Integer id, EstadoPagamento estado, Servico servico) {
+    public Pagamento(Integer id, EstadoPagamento status, Servico servico) {
         super();
         this.id = id;
-        this.estado = (estado==null) ? null : estado.getCod();
+        this.status = (status==null) ? null : status.getCod();
         this.servico = servico;
     }
 
@@ -41,12 +41,12 @@ public abstract class Pagamento implements Serializable {
         this.id = id;
     }
 
-    public EstadoPagamento getEstado() {
-        return EstadoPagamento.toEnum(estado);
+    public EstadoPagamento getStatus() {
+        return EstadoPagamento.toEnum(status);
     }
 
-    public void setEstado(EstadoPagamento estado) {
-        this.estado = estado.getCod();
+    public void setStatus(EstadoPagamento status) {
+        this.status = status.getCod();
     }
 
     public Servico getServico() {

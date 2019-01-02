@@ -1,7 +1,6 @@
 package com.api.zoobook.restapizoobook.dto;
 
 import com.api.zoobook.restapizoobook.domain.socialNetwork.PostsUsuario;
-import com.api.zoobook.restapizoobook.domain.socialNetwork.ProfilePet;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.validation.constraints.NotEmpty;

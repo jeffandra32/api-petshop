@@ -1,17 +1,15 @@
 package com.api.zoobook.restapizoobook.services.netWork;
 
-import com.api.zoobook.restapizoobook.domain.socialNetwork.Followers;
-import com.api.zoobook.restapizoobook.domain.socialNetwork.PostLikes;
-import com.api.zoobook.restapizoobook.exceptions.ObjectNotFoundException;
-import com.api.zoobook.restapizoobook.repositores.FollowersRepository;
-import com.api.zoobook.restapizoobook.repositores.PostLikesRepository;
-import com.api.zoobook.restapizoobook.services.ClienteService;
-import com.api.zoobook.restapizoobook.services.exceptions.DataIntegrityException;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import com.api.zoobook.restapizoobook.domain.socialNetwork.Followers;
+import com.api.zoobook.restapizoobook.exceptions.ObjectNotFoundException;
+import com.api.zoobook.restapizoobook.repositores.FollowersRepository;
+import com.api.zoobook.restapizoobook.services.exceptions.DataIntegrityException;
 
 @Service
 public class FollowersService {

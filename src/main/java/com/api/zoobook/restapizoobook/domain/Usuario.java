@@ -1,38 +1,42 @@
 package com.api.zoobook.restapizoobook.domain;
 
 import com.api.zoobook.restapizoobook.domain.enums.Perfil;
-import com.api.zoobook.restapizoobook.domain.enums.TipoCliente;
+import com.api.zoobook.restapizoobook.domain.enums.TipoUsuario;
+import com.api.zoobook.restapizoobook.domain.pet.Pet;
+import com.api.zoobook.restapizoobook.domain.servico.Servico;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
-public class Cliente implements Serializable {
+public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
-    private String nome;
+    private String name;
 
     @Column(unique=true)
     private String email;
-    private String cpfOuCnpj;
-    private Integer tipo;
-    private String imageUrl;
-
-
     @JsonIgnore
-    private String senha;
+    private String password;
 
-    @OneToMany(mappedBy="cliente", cascade=CascadeType.ALL)
+    private String cpfOuCnpj;
+    private Date birthDate;
+    private Integer type;
+    private String imageUrl;
+    private Date createAt;
+
+
+    @OneToMany(mappedBy="usuario", cascade=CascadeType.ALL)
     private List<Endereco> enderecos = new ArrayList<>();
+
+    @OneToMany(mappedBy="usuario", cascade=CascadeType.ALL)
+    private List<Localizacao> localizacao = new ArrayList<>();
 
 
     @ElementCollection
@@ -44,25 +48,27 @@ public class Cliente implements Serializable {
     private Set<Integer> perfis = new HashSet<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy="cliente")
+    @OneToMany(mappedBy="usuario")
     private List<Servico> servicos = new ArrayList<>();
 
 
-    @OneToMany(mappedBy="cliente")
+    @OneToMany(mappedBy="usuario")
     private List<Pet> pets = new ArrayList<>();
 
-    public Cliente() {
+    public Usuario() {
         addPerfil(Perfil.USUARIO);
     }
 
-    public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo, String senha) {
+    public Usuario(Integer id, String name, String email,  String cpfOuCnpj, Date birthDate, Date createAt ,TipoUsuario type, String password) {
         super();
         this.id = id;
-        this.nome = nome;
+        this.name = name;
         this.email = email;
         this.cpfOuCnpj = cpfOuCnpj;
-        this.tipo = (tipo==null) ? null : tipo.getCod();
-        this.senha = senha;
+        this.type = (type==null) ? null : type.getCod();
+        this.password = password;
+        this.birthDate = birthDate;
+        this.createAt = createAt;
         addPerfil(Perfil.USUARIO);
     }
 
@@ -74,12 +80,12 @@ public class Cliente implements Serializable {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -90,12 +96,36 @@ public class Cliente implements Serializable {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getCpfOuCnpj() {
         return cpfOuCnpj;
     }
 
     public void setCpfOuCnpj(String cpfOuCnpj) {
         this.cpfOuCnpj = cpfOuCnpj;
+    }
+
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     public String getImageUrl() {
@@ -106,20 +136,12 @@ public class Cliente implements Serializable {
         this.imageUrl = imageUrl;
     }
 
-    public TipoCliente getTipo() {
-        return TipoCliente.toEnum(tipo);
+    public Date getCreateAt() {
+        return createAt;
     }
 
-    public void setTipo(TipoCliente tipo) {
-        this.tipo = tipo.getCod();
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
     }
 
     public Set<Perfil> getPerfis() {
@@ -132,6 +154,14 @@ public class Cliente implements Serializable {
 
     public List<Endereco> getEnderecos() {
         return enderecos;
+    }
+
+    public List<Localizacao> getLocalizacao() {
+        return localizacao;
+    }
+
+    public void setLocalizacaos(List<Localizacao> localizacao) {
+        this.localizacao = localizacao;
     }
 
     public void setEnderecos(List<Endereco> enderecos) {
@@ -179,7 +209,7 @@ public class Cliente implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Cliente other = (Cliente) obj;
+        Usuario other = (Usuario) obj;
         if (id == null) {
             if (other.id != null)
                 return false;

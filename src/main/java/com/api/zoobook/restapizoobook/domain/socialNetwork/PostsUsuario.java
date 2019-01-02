@@ -33,6 +33,15 @@ public class PostsUsuario implements Serializable {
     @JoinColumn(name="profile_pet_id")
     private ProfilePet profilePet;
 
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name="profile_fornecedor_id")
+    private ProfileFornecedor profileFornecedor;
+
+
+    @OneToMany(mappedBy="postsUsuario")
+    private List<TimeLine> timeLines = new ArrayList<>();
+
     @OneToMany(mappedBy="postsUsuario")
     private List<PostLikes> postLikes = new ArrayList<>();
 
@@ -42,7 +51,7 @@ public class PostsUsuario implements Serializable {
     public PostsUsuario() {
     }
 
-    public PostsUsuario(Integer id, String body, Date posted_at, Integer likes, String postImg, String topics, ProfilePet profilePet) {
+    public PostsUsuario(Integer id, String body, Date posted_at, Integer likes, String postImg, String topics, ProfilePet profilePet, ProfileFornecedor profileFornecedor) {
         this.id = id;
         this.body = body;
         this.posted_at = posted_at;
@@ -50,6 +59,8 @@ public class PostsUsuario implements Serializable {
         this.postImg = postImg;
         this.topics = topics;
         this.profilePet = profilePet;
+        this.profileFornecedor = profileFornecedor;
+
     }
 
     @Override
@@ -119,6 +130,22 @@ public class PostsUsuario implements Serializable {
 
     public void setProfilePet(ProfilePet profilePet) {
         this.profilePet = profilePet;
+    }
+
+    public ProfileFornecedor getProfileFornecedor() {
+        return profileFornecedor;
+    }
+
+    public void setProfileFornecedor(ProfileFornecedor profileFornecedor) {
+        this.profileFornecedor = profileFornecedor;
+    }
+
+    public List<TimeLine> getTimeLines() {
+        return timeLines;
+    }
+
+    public void setTimeLines(List<TimeLine> timeLines) {
+        this.timeLines = timeLines;
     }
 
     public List<PostLikes> getPostLikes() {

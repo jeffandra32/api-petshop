@@ -1,6 +1,6 @@
 package com.api.zoobook.restapizoobook.services;
 
-import com.api.zoobook.restapizoobook.domain.Servico;
+import com.api.zoobook.restapizoobook.domain.servico.Servico;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.SimpleMailMessage;

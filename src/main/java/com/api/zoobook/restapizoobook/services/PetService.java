@@ -1,6 +1,7 @@
 package com.api.zoobook.restapizoobook.services;
 
 import com.api.zoobook.restapizoobook.domain.*;
+import com.api.zoobook.restapizoobook.domain.pet.Pet;
 import com.api.zoobook.restapizoobook.dto.PetDTO;
 import com.api.zoobook.restapizoobook.exceptions.ObjectNotFoundException;
 import com.api.zoobook.restapizoobook.repositores.PetRepository;
@@ -52,15 +53,15 @@ public class PetService {
 
     public Pet insert(Pet obj) {
         obj.setId(null);
-        obj.setData_nascimento(new Date());
-        obj.setAceita_relacionamento(true);
-        obj.setDoacao(false);
-        obj.setFiliacao(null);
-        obj.setNome(null);
-        obj.setRaça(null);
-        obj.setIdade(null);
-        obj.setTipo(null);
-        obj.setCliente(clienteService.find(obj.getCliente().getId()));
+        obj.setBirthDate(new Date());
+        obj.setAcceptRelationship(true);
+        obj.setDonation(false);
+        obj.setFiliation(null);
+        obj.setName(null);
+        obj.setBreed(null);
+        obj.setAge(null);
+        obj.setType(null);
+        obj.setUsuario(clienteService.find(obj.getUsuario().getId()));
         obj = repo.save(obj);
         return obj;
     }
@@ -87,10 +88,10 @@ public class PetService {
 
 
     public Pet fromDTO(PetDTO objDto) {
-        return new Pet(objDto.getId(), objDto.getNome(), objDto.getRaca(),
-                objDto.getIdade(), objDto.getData_nascimento(),
-                objDto.getPeso(), objDto.getFiliacao(), null, objDto.isAceita_relacionamento(),
-                objDto.isDoacao(), null);
+        return new Pet(objDto.getId(), objDto.getName(), objDto.getBreed(),
+                objDto.getAge(), objDto.getBirthDate(),
+                objDto.getWeight(), objDto.getFiliation(), null, objDto.isAcceptRelationship(),
+                objDto.isDonation(), null);
     }
 
 
@@ -100,21 +101,21 @@ public class PetService {
             throw new AuthorizationException("Acesso negado");
         }
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
-        Cliente cliente =  clienteService.find(user.getId());
-        return repo.findByCliente(cliente, pageRequest);
+        Usuario usuario =  clienteService.find(user.getId());
+        return repo.findByUsuario(usuario, pageRequest);
     }
 
     private void updateData(Pet newObj, Pet obj) {
-        newObj.setNome(obj.getNome());
-        newObj.setRaça(obj.getRaça());
-        newObj.setIdade(obj.getIdade());
-        newObj.setData_nascimento(obj.getData_nascimento());
-        newObj.setPeso(obj.getPeso());
-        newObj.setFiliacao(obj.getFiliacao());
-        newObj.setAceita_relacionamento(obj.isAceita_relacionamento());
-        newObj.setDoacao(obj.isDoacao());
+        newObj.setName(obj.getName());
+        newObj.setBreed(obj.getBreed());
+        newObj.setAge(obj.getAge());
+        newObj.setBirthDate(obj.getBirthDate());
+        newObj.setWeight(obj.getWeight());
+        newObj.setFiliation(obj.getFiliation());
+        newObj.setAcceptRelationship(obj.isAcceptRelationship());
+        newObj.setDonation(obj.isDonation());
         newObj.setImageUrl(obj.getImageUrl());
-        newObj.setTipo(obj.getTipo());
+        newObj.setType(obj.getType());
     }
 
     public URI uploadProfilePicture(MultipartFile multipartFile) {

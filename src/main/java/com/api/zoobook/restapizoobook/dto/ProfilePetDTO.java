@@ -1,6 +1,6 @@
 package com.api.zoobook.restapizoobook.dto;
 
-import com.api.zoobook.restapizoobook.domain.Pet;
+import com.api.zoobook.restapizoobook.domain.pet.Pet;
 import com.api.zoobook.restapizoobook.domain.socialNetwork.Followers;
 import com.api.zoobook.restapizoobook.domain.socialNetwork.PostsUsuario;
 import com.api.zoobook.restapizoobook.domain.socialNetwork.ProfilePet;

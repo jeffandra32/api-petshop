@@ -1,6 +1,5 @@
 package com.api.zoobook.restapizoobook.domain.socialNetwork;
 
-import com.api.zoobook.restapizoobook.domain.Cliente;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -9,6 +8,7 @@ import java.util.Objects;
 
 @Entity
 public class Followers implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -22,13 +22,19 @@ public class Followers implements Serializable {
     @JoinColumn(name="profile_pet_id")
     private ProfilePet profilePet;
 
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name="profile_fornecedor_id")
+    private ProfileFornecedor profileFornecedor;
+
     public Followers() {
     }
 
-    public Followers(Integer id, Integer followers_id, ProfilePet profilePet) {
+    public Followers(Integer id, Integer followers_id, ProfilePet profilePet, ProfileFornecedor profileFornecedor) {
         this.id = id;
         this.followers_id = followers_id;
         this.profilePet = profilePet;
+        this.profileFornecedor = profileFornecedor;
     }
 
     @Override
@@ -66,5 +72,13 @@ public class Followers implements Serializable {
 
     public void setProfilePet(ProfilePet profilePet) {
         this.profilePet = profilePet;
+    }
+
+    public ProfileFornecedor getProfileFornecedor() {
+        return profileFornecedor;
+    }
+
+    public void setProfileFornecedor(ProfileFornecedor profileFornecedor) {
+        this.profileFornecedor = profileFornecedor;
     }
 }

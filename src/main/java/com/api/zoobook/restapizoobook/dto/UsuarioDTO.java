@@ -1,6 +1,6 @@
 package com.api.zoobook.restapizoobook.dto;
 
-import com.api.zoobook.restapizoobook.domain.Cliente;
+import com.api.zoobook.restapizoobook.domain.Usuario;
 import com.api.zoobook.restapizoobook.services.validation.ClienteUpdate;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Length;
@@ -10,7 +10,7 @@ import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
 @ClienteUpdate
-public class ClienteDTO implements Serializable {
+public class UsuarioDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @JsonIgnore
@@ -18,7 +18,7 @@ public class ClienteDTO implements Serializable {
 
     @NotEmpty(message="Preenchimento obrigatório")
     @Length(min=5, max=120, message="O tamanho deve ser entre 5 e 120 caracteres")
-    private String nome;
+    private String name;
 
     @NotEmpty(message="Preenchimento obrigatório")
     @Email(message="Email inválido")
@@ -26,12 +26,12 @@ public class ClienteDTO implements Serializable {
 
 
 
-    public ClienteDTO() {
+    public UsuarioDTO() {
     }
 
-    public ClienteDTO(Cliente obj) {
+    public UsuarioDTO(Usuario obj) {
         id = obj.getId();
-        nome = obj.getNome();
+        name = obj.getName();
         email = obj.getEmail();
 
     }
@@ -45,12 +45,12 @@ public class ClienteDTO implements Serializable {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {

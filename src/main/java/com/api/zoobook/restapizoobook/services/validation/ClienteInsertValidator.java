@@ -1,8 +1,8 @@
 package com.api.zoobook.restapizoobook.services.validation;
 
-import com.api.zoobook.restapizoobook.domain.Cliente;
+import com.api.zoobook.restapizoobook.domain.Usuario;
 import com.api.zoobook.restapizoobook.dto.ClienteNewDTO;
-import com.api.zoobook.restapizoobook.domain.enums.TipoCliente;
+import com.api.zoobook.restapizoobook.domain.enums.TipoUsuario;
 import com.api.zoobook.restapizoobook.repositores.ClienteRepository;
 import com.api.zoobook.restapizoobook.resources.exceptions.FieldMessage;
 import com.api.zoobook.restapizoobook.services.validation.utils.BR;
@@ -29,15 +29,15 @@ public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert
 
         List<FieldMessage> list = new ArrayList<>();
 
-        if (objDto.getTipo().equals(TipoCliente.PESSOAFISICA.getCod()) && !BR.isValidCPF(objDto.getCpfOuCnpj())) {
+        if (objDto.getType().equals(TipoUsuario.PESSOAFISICA.getCod()) && !BR.isValidCPF(objDto.getCpfOuCnpj())) {
             list.add(new FieldMessage("cpfOuCnpj", "CPF inválido"));
         }
 
-        if (objDto.getTipo().equals(TipoCliente.PESSOAJURIDICA.getCod()) && !BR.isValidCNPJ(objDto.getCpfOuCnpj())) {
+        if (objDto.getType().equals(TipoUsuario.PESSOAJURIDICA.getCod()) && !BR.isValidCNPJ(objDto.getCpfOuCnpj())) {
             list.add(new FieldMessage("cpfOuCnpj", "CNPJ inválido"));
         }
 
-        Cliente aux = repo.findByEmail(objDto.getEmail());
+        Usuario aux = repo.findByEmail(objDto.getEmail());
         if (aux != null) {
             list.add(new FieldMessage("email", "Email já existente"));
         }

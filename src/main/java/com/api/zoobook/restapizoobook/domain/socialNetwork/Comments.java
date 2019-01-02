@@ -9,6 +9,7 @@ import java.util.Objects;
 
 @Entity
 public class Comments implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -23,17 +24,23 @@ public class Comments implements Serializable {
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name="post_cliente_id")
+    @JoinColumn(name="profile_fornecedor_id")
+    private ProfileFornecedor profileFornecedor;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name="post_usuario_id")
     private PostsUsuario postsUsuario;
 
     public Comments() {
     }
 
-    public Comments(Integer id, String comment, Date posted_at, ProfilePet profilePet, PostsUsuario postsUsuario) {
+    public Comments(Integer id, String comment, Date posted_at, ProfilePet profilePet, ProfileFornecedor profileFornecedor, PostsUsuario postsUsuario) {
         this.id = id;
         this.comment = comment;
         this.posted_at = posted_at;
         this.profilePet = profilePet;
+        this.profileFornecedor = profileFornecedor;
         this.postsUsuario = postsUsuario;
 
     }
@@ -81,6 +88,14 @@ public class Comments implements Serializable {
 
     public void setProfilePet(ProfilePet profilePet) {
         this.profilePet = profilePet;
+    }
+
+    public ProfileFornecedor getProfileFornecedor() {
+        return profileFornecedor;
+    }
+
+    public void setProfileFornecedor(ProfileFornecedor profileFornecedor) {
+        this.profileFornecedor = profileFornecedor;
     }
 
     public PostsUsuario getPostsUsuario() {

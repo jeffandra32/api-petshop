@@ -8,14 +8,14 @@ public class CidadeDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Integer id;
-    private String nome;
+    private String name;
 
     public CidadeDTO() {
     }
 
     public CidadeDTO(Cidade obj) {
         id = obj.getId();
-        nome = obj.getNome();
+        name = obj.getname();
     }
 
     public Integer getId() {
@@ -26,11 +26,11 @@ public class CidadeDTO implements Serializable {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -22,6 +22,9 @@ public class PostUserService {
     @Autowired
     private ProfilePetService profilePetService;
 
+    @Autowired
+    private ProfileFornecedorService profileFornecedorService;
+
 
     public PostsUsuario find(Integer id) {
         Optional<PostsUsuario> obj = repo.findById(id);
@@ -37,6 +40,7 @@ public class PostUserService {
         obj.setPostImg(null);
         obj.setTopics(null);
         obj.setProfilePet(profilePetService.findProfilePet(obj.getProfilePet().getId()));
+        obj.setProfileFornecedor(profileFornecedorService.findProfileFornecedor(obj.getProfileFornecedor().getId()));
         obj = repo.save(obj);
         return obj;
     }

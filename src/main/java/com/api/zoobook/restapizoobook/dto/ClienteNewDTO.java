@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
+import java.util.Date;
 
 @ClienteInsert
 public class ClienteNewDTO implements Serializable {
@@ -14,7 +15,7 @@ public class ClienteNewDTO implements Serializable {
 
     @NotEmpty(message="Preenchimento obrigatório")
     @Length(min=5, max=120, message="O tamanho deve ser entre 5 e 120 caracteres")
-    private String nome;
+    private String name;
 
     @NotEmpty(message="Preenchimento obrigatório")
     @Email(message="Email inválido")
@@ -23,31 +24,34 @@ public class ClienteNewDTO implements Serializable {
     @NotEmpty(message="Preenchimento obrigatório")
     private String cpfOuCnpj;
 
-    private Integer tipo;
-
-
-    @NotEmpty(message="Preenchimento obrigatório")
-    private String senha;
+    private Integer type;
 
     @NotEmpty(message="Preenchimento obrigatório")
-    private String logradouro;
+    private String password;
+
+    private Date birthDate;
+
+    private Date createAt;
 
     @NotEmpty(message="Preenchimento obrigatório")
-    private String numero;
+    private String address;
 
-    private String complemento;
+    @NotEmpty(message="Preenchimento obrigatório")
+    private String number;
 
-    private String bairro;
+    private String complement;
+
+    private String neighborhood;
 
     @NotEmpty(message="Preenchimento obrigatório")
     private String cep;
 
     @NotEmpty(message="Preenchimento obrigatório")
-    private String telefone1;
+    private String fone1;
 
-    private String telefone2;
+    private String fone2;
 
-    private String telefone3;
+    private String fone3;
 
     private Integer cidadeId;
 
@@ -56,12 +60,12 @@ public class ClienteNewDTO implements Serializable {
     public ClienteNewDTO() {
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -80,44 +84,52 @@ public class ClienteNewDTO implements Serializable {
         this.cpfOuCnpj = cpfOuCnpj;
     }
 
-    public Integer getTipo() {
-        return tipo;
+    public Integer getType() {
+        return type;
     }
 
-    public void setTipo(Integer tipo) {
-        this.tipo = tipo;
+    public void setType(Integer type) {
+        this.type = type;
     }
 
-    public String getLogradouro() {
-        return logradouro;
+    public String getPassword() {
+        return password;
     }
 
-    public void setLogradouro(String logradouro) {
-        this.logradouro = logradouro;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getNumero() {
-        return numero;
+    public String getAddress() {
+        return address;
     }
 
-    public void setNumero(String numero) {
-        this.numero = numero;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getComplemento() {
-        return complemento;
+    public String getNumber() {
+        return number;
     }
 
-    public void setComplemento(String complemento) {
-        this.complemento = complemento;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
-    public String getBairro() {
-        return bairro;
+    public String getComplement() {
+        return complement;
     }
 
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
+    public void setComplement(String complement) {
+        this.complement = complement;
+    }
+
+    public String getNeighborhood() {
+        return neighborhood;
+    }
+
+    public void setNeighborhood(String neighborhood) {
+        this.neighborhood = neighborhood;
     }
 
     public String getCep() {
@@ -128,28 +140,28 @@ public class ClienteNewDTO implements Serializable {
         this.cep = cep;
     }
 
-    public String getTelefone1() {
-        return telefone1;
+    public String getFone1() {
+        return fone1;
     }
 
-    public void setTelefone1(String telefone1) {
-        this.telefone1 = telefone1;
+    public void setFone1(String fone1) {
+        this.fone1 = fone1;
     }
 
-    public String getTelefone2() {
-        return telefone2;
+    public String getFone2() {
+        return fone2;
     }
 
-    public void setTelefone2(String telefone2) {
-        this.telefone2 = telefone2;
+    public void setFone2(String fone2) {
+        this.fone2 = fone2;
     }
 
-    public String getTelefone3() {
-        return telefone3;
+    public String getFone3() {
+        return fone3;
     }
 
-    public void setTelefone3(String telefone3) {
-        this.telefone3 = telefone3;
+    public void setFone3(String fone3) {
+        this.fone3 = fone3;
     }
 
     public Integer getCidadeId() {
@@ -160,12 +172,28 @@ public class ClienteNewDTO implements Serializable {
         this.cidadeId = cidadeId;
     }
 
-    public String getSenha() {
-        return senha;
+    public String getpassword() {
+        return password;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setpassword(String password) {
+        this.password = password;
+    }
+
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
     }
 
     public DBFile getDbFile() {

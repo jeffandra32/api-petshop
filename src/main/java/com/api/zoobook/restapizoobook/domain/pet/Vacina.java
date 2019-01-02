@@ -1,4 +1,4 @@
-package com.api.zoobook.restapizoobook.domain;
+package com.api.zoobook.restapizoobook.domain.pet;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,9 +13,9 @@ public class Vacina implements Serializable {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
 
-    private String tipo;
+    private String type;
 
-    private String prioridade;
+    private String priority;
 
     private Double qtd_dose;
 
@@ -26,10 +26,10 @@ public class Vacina implements Serializable {
     public Vacina() {
     }
 
-    public Vacina(Integer id, String tipo, String prioridade, Double qtd_dose, Prontuario prontuario) {
+    public Vacina(Integer id, String type, String priority, Double qtd_dose, Prontuario prontuario) {
         this.id = id;
-        this.tipo = tipo;
-        this.prioridade = prioridade;
+        this.type = type;
+        this.priority = priority;
         this.qtd_dose = qtd_dose;
         this.prontuario = prontuario;
     }
@@ -55,20 +55,20 @@ public class Vacina implements Serializable {
         this.id = id;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getType() {
+        return type;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public String getPrioridade() {
-        return prioridade;
+    public String getPriority() {
+        return priority;
     }
 
-    public void setPrioridade(String prioridade) {
-        this.prioridade = prioridade;
+    public void setPriority(String priority) {
+        this.priority = priority;
     }
 
     public Double getQtd_dose() {

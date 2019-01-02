@@ -1,6 +1,6 @@
 package com.api.zoobook.restapizoobook.services;
 
-import com.api.zoobook.restapizoobook.domain.Categoria;
+import com.api.zoobook.restapizoobook.domain.servico.Categoria;
 import com.api.zoobook.restapizoobook.dto.CategoriaDTO;
 import com.api.zoobook.restapizoobook.exceptions.ObjectNotFoundException;
 import com.api.zoobook.restapizoobook.repositores.CategoriaRepository;
@@ -58,10 +58,10 @@ public class CategoriaService {
     }
 
     public Categoria fromDTO(CategoriaDTO objDto) {
-        return new Categoria(objDto.getId(), objDto.getNome());
+        return new Categoria(objDto.getId(), objDto.getName());
     }
 
     private void updateData(Categoria newObj, Categoria obj) {
-        newObj.setNome(obj.getNome());
+        newObj.setName(obj.getName());
     }
 }

@@ -1,6 +1,6 @@
 package com.api.zoobook.restapizoobook.resources;
 
-import com.api.zoobook.restapizoobook.domain.Produto;
+import com.api.zoobook.restapizoobook.domain.servico.Produto;
 import com.api.zoobook.restapizoobook.dto.ProdutoDTO;
 import com.api.zoobook.restapizoobook.resources.utils.URL;
 import com.api.zoobook.restapizoobook.services.ProdutoService;

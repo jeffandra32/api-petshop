@@ -1,5 +1,5 @@
 package com.api.zoobook.restapizoobook.domain.agenda;
-import com.api.zoobook.restapizoobook.domain.Servico;
+import com.api.zoobook.restapizoobook.domain.servico.Servico;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -10,8 +10,9 @@ import java.util.Objects;
 
 @Entity
 public class Eventos implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-    @Id
+	@Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
 

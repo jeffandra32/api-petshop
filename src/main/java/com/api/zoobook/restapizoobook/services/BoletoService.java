@@ -1,6 +1,6 @@
 package com.api.zoobook.restapizoobook.services;
 
-import com.api.zoobook.restapizoobook.domain.PagamentoComBoleto;
+import com.api.zoobook.restapizoobook.domain.servico.PagamentoComBoleto;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
@@ -13,6 +13,6 @@ public class BoletoService {
         Calendar cal = Calendar.getInstance();
         cal.setTime(instanteDoPedido);
         cal.add(Calendar.DAY_OF_MONTH, 7);
-        pagto.setDataVencimento(cal.getTime());
+        pagto.setdateVencement(cal.getTime());
     }
 }

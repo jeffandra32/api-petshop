@@ -1,4 +1,4 @@
-package com.api.zoobook.restapizoobook.domain;
+package com.api.zoobook.restapizoobook.domain.servico;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,8 +24,8 @@ public class Produto  implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
-    private String nome;
-    private Double preco;
+    private String name;
+    private Double price;
 
     private String imageUrl;
 
@@ -44,11 +44,11 @@ public class Produto  implements Serializable {
     public Produto() {
     }
 
-    public Produto(Integer id, String nome, Double preco) {
+    public Produto(Integer id, String name, Double price) {
         super();
         this.id = id;
-        this.nome = nome;
-        this.preco = preco;
+        this.name = name;
+        this.price = price;
     }
 
     @JsonIgnore
@@ -69,20 +69,20 @@ public class Produto  implements Serializable {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Double getPreco() {
-        return preco;
+    public Double getPrice() {
+        return price;
     }
 
-    public void setPreco(Double preco) {
-        this.preco = preco;
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public List<Categoria> getCategorias() {

@@ -19,16 +19,25 @@ public class Endereco implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
-    private String logradouro;
-    private String numero;
-    private String complemento;
-    private String bairro;
+
+    /*
+     *  endereço
+     *  número
+     *  complemento
+     *  bairro
+     *  cep
+     * */
+    
+    private String address;
+    private String number;
+    private String complement;
+    private String neighborhood;
     private String cep;
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name="cliente_id")
-    private Cliente cliente;
+    @JoinColumn(name="usuario_id")
+    private Usuario usuario;
 
     @ManyToOne
     @JoinColumn(name="cidade_id")
@@ -37,16 +46,16 @@ public class Endereco implements Serializable {
     public Endereco() {
     }
 
-    public Endereco(Integer id, String logradouro, String numero, String complemento, String bairro, String cep,
-                    Cliente cliente, Cidade cidade) {
+    public Endereco(Integer id, String address, String number, String complement, String neighborhood, String cep,
+                    Usuario usuario, Cidade cidade) {
         super();
         this.id = id;
-        this.logradouro = logradouro;
-        this.numero = numero;
-        this.complemento = complemento;
-        this.bairro = bairro;
+        this.address = address;
+        this.number = number;
+        this.complement = complement;
+        this.neighborhood = neighborhood;
         this.cep = cep;
-        this.cliente = cliente;
+        this.usuario = usuario;
         this.setCidade(cidade);
     }
 
@@ -58,36 +67,36 @@ public class Endereco implements Serializable {
         this.id = id;
     }
 
-    public String getLogradouro() {
-        return logradouro;
+    public String getAddress() {
+        return address;
     }
 
-    public void setLogradouro(String logradouro) {
-        this.logradouro = logradouro;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getNumero() {
-        return numero;
+    public String getNumber() {
+        return number;
     }
 
-    public void setNumero(String numero) {
-        this.numero = numero;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
-    public String getComplemento() {
-        return complemento;
+    public String getComplement() {
+        return complement;
     }
 
-    public void setComplemento(String complemento) {
-        this.complemento = complemento;
+    public void setComplement(String complement) {
+        this.complement = complement;
     }
 
-    public String getBairro() {
-        return bairro;
+    public String getNeighborhood() {
+        return neighborhood;
     }
 
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
+    public void setNeighborhood(String neighborhood) {
+        this.neighborhood = neighborhood;
     }
 
     public String getCep() {
@@ -98,12 +107,12 @@ public class Endereco implements Serializable {
         this.cep = cep;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
 

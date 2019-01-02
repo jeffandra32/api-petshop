@@ -1,4 +1,4 @@
-package com.api.zoobook.restapizoobook.domain;
+package com.api.zoobook.restapizoobook.domain.servico;
 
 import com.api.zoobook.restapizoobook.domain.enums.EstadoPagamento;
 import com.fasterxml.jackson.annotation.JsonTypeName;

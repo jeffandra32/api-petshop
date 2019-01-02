@@ -7,7 +7,6 @@ import com.api.zoobook.restapizoobook.dto.PostsUsuarioDTO;
 import com.api.zoobook.restapizoobook.dto.ProfilePetDTO;
 import com.api.zoobook.restapizoobook.services.netWork.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;

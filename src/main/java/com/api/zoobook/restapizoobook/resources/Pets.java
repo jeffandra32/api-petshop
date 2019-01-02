@@ -1,7 +1,7 @@
 package com.api.zoobook.restapizoobook.resources;
 
 
-import com.api.zoobook.restapizoobook.domain.Pet;
+import com.api.zoobook.restapizoobook.domain.pet.Pet;
 import com.api.zoobook.restapizoobook.dto.PetDTO;
 import com.api.zoobook.restapizoobook.services.PetService;
 import org.springframework.beans.factory.annotation.Autowired;

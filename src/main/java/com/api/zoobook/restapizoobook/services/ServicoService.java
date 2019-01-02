@@ -1,9 +1,9 @@
 package com.api.zoobook.restapizoobook.services;
 
-import com.api.zoobook.restapizoobook.domain.Cliente;
-import com.api.zoobook.restapizoobook.domain.ItemPedido;
-import com.api.zoobook.restapizoobook.domain.PagamentoComBoleto;
-import com.api.zoobook.restapizoobook.domain.Servico;
+import com.api.zoobook.restapizoobook.domain.Usuario;
+import com.api.zoobook.restapizoobook.domain.servico.ItemPedido;
+import com.api.zoobook.restapizoobook.domain.servico.PagamentoComBoleto;
+import com.api.zoobook.restapizoobook.domain.servico.Servico;
 import com.api.zoobook.restapizoobook.domain.enums.EstadoPagamento;
 import com.api.zoobook.restapizoobook.exceptions.ObjectNotFoundException;
 import com.api.zoobook.restapizoobook.repositores.ItemPedidoRepository;
@@ -53,8 +53,8 @@ public class ServicoService {
     public Servico insert(Servico obj) {
         obj.setId(null);
         obj.setInstante(new Date());
-        obj.setCliente(clienteService.find(obj.getCliente().getId()));
-        obj.getPagamento().setEstado(EstadoPagamento.PENDENTE);
+        obj.setUsuario(clienteService.find(obj.getUsuario().getId()));
+        obj.getPagamento().setStatus(EstadoPagamento.PENDENTE);
         obj.getPagamento().setServico(obj);
         if (obj.getPagamento() instanceof PagamentoComBoleto) {
             PagamentoComBoleto pagto = (PagamentoComBoleto) obj.getPagamento();
@@ -63,9 +63,9 @@ public class ServicoService {
         obj = repo.save(obj);
         pagamentoRepository.save(obj.getPagamento());
         for (ItemPedido ip : obj.getItens()) {
-            ip.setDesconto(0.0);
+            ip.setDiscount(0.0);
             ip.setProduto(produtoService.find(ip.getProduto().getId()));
-            ip.setPreco(ip.getProduto().getPreco());
+            ip.setPrice(ip.getProduto().getPrice());
             ip.setPedido(obj);
         }
         itemPedidoRepository.saveAll(obj.getItens());
@@ -79,7 +79,7 @@ public class ServicoService {
             throw new AuthorizationException("Acesso negado");
         }
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
-        Cliente cliente =  clienteService.find(user.getId());
-        return repo.findByCliente(cliente, pageRequest);
+        Usuario usuario =  clienteService.find(user.getId());
+        return repo.findByUsuario(usuario, pageRequest);
     }
 }

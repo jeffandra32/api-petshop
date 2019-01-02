@@ -1,4 +1,4 @@
-package com.api.zoobook.restapizoobook.domain;
+package com.api.zoobook.restapizoobook.domain.servico;
 
 import java.io.Serializable;
 import java.text.NumberFormat;
@@ -18,6 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.api.zoobook.restapizoobook.domain.Usuario;
+import com.api.zoobook.restapizoobook.domain.Endereco;
 import com.api.zoobook.restapizoobook.domain.agenda.Eventos;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -36,8 +38,8 @@ public class Servico implements Serializable {
     private Pagamento pagamento;
 
     @ManyToOne
-    @JoinColumn(name="cliente_id")
-    private Cliente cliente;
+    @JoinColumn(name="usuario_id")
+    private Usuario usuario;
 
     @ManyToOne
     @JoinColumn(name="eventos_id")
@@ -53,11 +55,11 @@ public class Servico implements Serializable {
     public Servico() {
     }
 
-    public Servico(Integer id, Date instante, Cliente cliente, Eventos eventos, Endereco enderecoDeEntrega) {
+    public Servico(Integer id, Date instante, Usuario usuario, Eventos eventos, Endereco enderecoDeEntrega) {
         super();
         this.id = id;
         this.instante = instante;
-        this.cliente = cliente;
+        this.usuario = usuario;
         this.eventos = eventos;
         this.enderecoDeEntrega = enderecoDeEntrega;
     }
@@ -94,12 +96,12 @@ public class Servico implements Serializable {
         this.pagamento = pagamento;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public Eventos getEventos() {
@@ -160,10 +162,10 @@ public class Servico implements Serializable {
         builder.append(getId());
         builder.append(", Instante: ");
         builder.append(sdf.format(getInstante()));
-        builder.append(", Cliente: ");
-        builder.append(getCliente().getNome());
+        builder.append(", Usuario: ");
+        builder.append(getUsuario().getName());
         builder.append(", Situação do pagamento: ");
-        builder.append(getPagamento().getEstado().getDescricao());
+        builder.append(getPagamento().getStatus().getDescricao());
         builder.append("\nDetalhes:\n");
         for (ItemPedido ip : getItens()) {
             builder.append(ip.toString());

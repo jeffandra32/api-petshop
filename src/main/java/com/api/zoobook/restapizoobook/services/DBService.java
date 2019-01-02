@@ -3,16 +3,21 @@ import com.api.zoobook.restapizoobook.domain.*;
 import com.api.zoobook.restapizoobook.domain.agenda.Eventos;
 import com.api.zoobook.restapizoobook.domain.enums.EstadoPagamento;
 import com.api.zoobook.restapizoobook.domain.enums.Perfil;
-import com.api.zoobook.restapizoobook.domain.enums.TipoCliente;
+import com.api.zoobook.restapizoobook.domain.enums.TipoUsuario;
 import com.api.zoobook.restapizoobook.domain.enums.TipoPet;
+import com.api.zoobook.restapizoobook.domain.pet.Pet;
+import com.api.zoobook.restapizoobook.domain.pet.Prontuario;
+import com.api.zoobook.restapizoobook.domain.servico.*;
 import com.api.zoobook.restapizoobook.domain.socialNetwork.*;
 import com.api.zoobook.restapizoobook.repositores.*;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 @Service
@@ -215,15 +220,17 @@ public class DBService {
 
         /**USER [USUARIO - ADMIN, FORNECEDOR - SUSPENSO]*/
 
-        Cliente cli1 = new Cliente(null, "Jefferson Andrade", "jeff.teste@gmail.com", "07392408461", TipoCliente.PESSOAFISICA, pe.encode("123456"));
+        SimpleDateFormat sdf4 = new SimpleDateFormat("dd/MM/yyyy");
+
+        Usuario cli1 = new Usuario(null, "Jefferson Andrade", "jeff.teste@gmail.com", "07392408461", sdf4.parse("30/09/2017 10:32"), null,TipoUsuario.PESSOAFISICA, pe.encode("123456"));
         cli1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
         cli1.addPerfil(Perfil.CLIENTE);
 
-        Cliente cli2 = new Cliente(null, "Ana Costa", "nelio.iftm@gmail.com", "31628382740", TipoCliente.PESSOAFISICA, pe.encode("123"));
+        Usuario cli2 = new Usuario(null, "Ana Costa", "nelio.iftm@gmail.com", "31628382740", sdf4.parse("30/09/2017 10:32"), null , TipoUsuario.PESSOAFISICA, pe.encode("123"));
         cli2.getTelefones().addAll(Arrays.asList("93883321", "34252625"));
         cli2.addPerfil(Perfil.ADMIN);
 
-        Cliente cli3 = new Cliente(null, "PET C&A", "pet@gmail.com", "44402576000150", TipoCliente.PESSOAJURIDICA, pe.encode("pet123"));
+        Usuario cli3 = new Usuario(null, "PET C&A", "pet@gmail.com", "44402576000150", sdf4.parse("30/09/2017 10:32"), null,TipoUsuario.PESSOAJURIDICA, pe.encode("pet123"));
         cli3.getTelefones().addAll(Arrays.asList("3233-0999", "8390000-0000"));
         cli3.addPerfil(Perfil.FORNECEDOR);
 
@@ -305,22 +312,22 @@ public class DBService {
 
         /**POST*/
         SimpleDateFormat sdf3 = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        PostsUsuario pst1 = new PostsUsuario(null, "Poste de teste", sdf3.parse("19/01/2018 10:32"), 1 , "Imagem", "Topic", proP1);
+        PostsUsuario pst1 = new PostsUsuario(null, "Poste de teste", sdf3.parse("19/01/2018 10:32"), 1 , "Imagem", "Topic", proP1, null);
         postUsuarioRepository.saveAll(Arrays.asList(pst1));
 
 
         /**LIKE*/
-        PostLikes like1 = new PostLikes(null, proP1, pst1);
+        PostLikes like1 = new PostLikes(null, proP1, null,  pst1);
         postLikesRepository.saveAll(Arrays.asList(like1));
 
 
         /**COMMENTS*/
-        Comments com1 = new Comments(null, "Muito Legal", sdf3.parse("19/01/2018 10:32"), proP1, pst1);
+        Comments com1 = new Comments(null, "Muito Legal", sdf3.parse("19/01/2018 10:32"), proP1, null ,pst1);
         commentsRepository.saveAll(Arrays.asList(com1));
 
 
         /**FOLLOWER*/
-        Followers for1 = new Followers(null, 1, proP1);
+        Followers for1 = new Followers(null, 1, proP1, null);
         followersRepository.saveAll(Arrays.asList(for1));
     }
 }

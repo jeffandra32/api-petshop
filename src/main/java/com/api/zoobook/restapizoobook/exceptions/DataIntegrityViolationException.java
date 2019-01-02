@@ -2,7 +2,9 @@ package com.api.zoobook.restapizoobook.exceptions;
 
 public class DataIntegrityViolationException extends RuntimeException{
 
-    public DataIntegrityViolationException(String msg){
+	private static final long serialVersionUID = 1L;
+
+	public DataIntegrityViolationException(String msg){
         super(msg);
     }
 

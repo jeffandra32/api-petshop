@@ -1,6 +1,6 @@
 package com.api.zoobook.restapizoobook.services;
 
-import com.api.zoobook.restapizoobook.domain.Prontuario;
+import com.api.zoobook.restapizoobook.domain.pet.Prontuario;
 import com.api.zoobook.restapizoobook.dto.ProntuarioDTO;
 import com.api.zoobook.restapizoobook.exceptions.ObjectNotFoundException;
 import com.api.zoobook.restapizoobook.repositores.ProntuarioRepository;
@@ -21,10 +21,6 @@ public class ProntuarioService {
     @Autowired
     private PetService petService;
 
-    @Autowired
-    private ClienteService clienteService;
-
-
     public Prontuario find(Integer id) {
         Optional<Prontuario> obj = repo.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException(
@@ -33,11 +29,11 @@ public class ProntuarioService {
 
     public Prontuario insert(Prontuario obj) {
         obj.setId(null);
-        obj.setVeterinario(null);
-        obj.setLogradouro(null);
-        obj.setNumero(null);
-        obj.setComplemento(null);
-        obj.setBairro(null);
+        obj.setVet(null);
+        obj.setAddress(null);
+        obj.setNumber(null);
+        obj.setComplement(null);
+        obj.setNeighborhood(null);
         obj.setCep(null);
         obj.setDbFile(null);
         obj.setPet(petService.find(obj.getPet().getId()));
@@ -67,18 +63,18 @@ public class ProntuarioService {
 
 
     public Prontuario fromDTO(ProntuarioDTO objDto) {
-        return new Prontuario(objDto.getId(), objDto.getVeterinario(), objDto.getLogradouro(),
-                objDto.getNumero(), objDto.getComplemento(),
-                objDto.getBairro(), objDto.getCep(), objDto.getDbFile(), objDto.getPet());
+        return new Prontuario(objDto.getId(), objDto.getVet(), objDto.getAddress(),
+                objDto.getNumber(), objDto.getComplement(),
+                objDto.getNeighborhood(), objDto.getCep(), objDto.getDbFile(), objDto.getPet());
     }
 
 
     private void updateData(Prontuario newObj, Prontuario obj) {
-        newObj.setVeterinario(obj.getVeterinario());
-        newObj.setLogradouro(obj.getLogradouro());
-        newObj.setNumero(obj.getNumero());
-        newObj.setComplemento(obj.getComplemento());
-        newObj.setBairro(obj.getBairro());
+        newObj.setVet(obj.getVet());
+        newObj.setAddress(obj.getAddress());
+        newObj.setNumber(obj.getNumber());
+        newObj.setComplement(obj.getComplement());
+        newObj.setNeighborhood(obj.getNeighborhood());
         newObj.setCep(obj.getCep());
         newObj.setDbFile(obj.getDbFile());
         newObj.setTelefones(obj.getTelefones());

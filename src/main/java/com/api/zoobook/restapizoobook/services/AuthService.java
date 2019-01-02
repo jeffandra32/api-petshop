@@ -1,6 +1,6 @@
 package com.api.zoobook.restapizoobook.services;
 
-import com.api.zoobook.restapizoobook.domain.Cliente;
+import com.api.zoobook.restapizoobook.domain.Usuario;
 import com.api.zoobook.restapizoobook.repositores.ClienteRepository;
 import com.api.zoobook.restapizoobook.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,16 +25,16 @@ public class AuthService {
 
     public void sendNewPassword(String email) {
 
-        Cliente cliente = clienteRepository.findByEmail(email);
-        if (cliente == null) {
+        Usuario usuario = clienteRepository.findByEmail(email);
+        if (usuario == null) {
             throw new ObjectNotFoundException("Email não encontrado");
         }
 
         String newPass = newPassword();
-        cliente.setSenha(pe.encode(newPass));
+        usuario.setPassword(pe.encode(newPass));
 
-        clienteRepository.save(cliente);
-        emailService.sendNewPasswordEmail(cliente, newPass);
+        clienteRepository.save(usuario);
+        emailService.sendNewPasswordEmail(usuario, newPass);
     }
 
     private String newPassword() {

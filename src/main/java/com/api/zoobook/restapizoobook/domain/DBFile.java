@@ -1,5 +1,6 @@
 package com.api.zoobook.restapizoobook.domain;
 
+import com.api.zoobook.restapizoobook.domain.pet.Prontuario;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 

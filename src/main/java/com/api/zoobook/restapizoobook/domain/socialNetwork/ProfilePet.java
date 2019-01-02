@@ -1,7 +1,6 @@
 package com.api.zoobook.restapizoobook.domain.socialNetwork;
 
-import com.api.zoobook.restapizoobook.domain.Pet;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.api.zoobook.restapizoobook.domain.pet.Pet;
 
 import javax.persistence.*;
 import java.io.Serializable;

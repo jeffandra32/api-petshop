@@ -1,15 +1,11 @@
 package com.api.zoobook.restapizoobook.resources;
 
 
-import com.api.zoobook.restapizoobook.domain.Cliente;
-import com.api.zoobook.restapizoobook.domain.Prontuario;
-import com.api.zoobook.restapizoobook.domain.socialNetwork.*;
+import com.api.zoobook.restapizoobook.domain.pet.Prontuario;
 import com.api.zoobook.restapizoobook.dto.*;
 import com.api.zoobook.restapizoobook.services.ProntuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 

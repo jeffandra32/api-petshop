@@ -1,7 +1,7 @@
 package com.api.zoobook.restapizoobook.services;
 
-import com.api.zoobook.restapizoobook.domain.Cliente;
-import com.api.zoobook.restapizoobook.domain.Servico;
+import com.api.zoobook.restapizoobook.domain.Usuario;
+import com.api.zoobook.restapizoobook.domain.servico.Servico;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 
@@ -20,7 +20,7 @@ public abstract class AbstractEmailService implements EmailService {
 
     protected SimpleMailMessage prepareSimpleMailMessageFromPedido(Servico obj) {
         SimpleMailMessage sm = new SimpleMailMessage();
-        sm.setTo(obj.getCliente().getEmail());
+        sm.setTo(obj.getUsuario().getEmail());
         sm.setFrom(sender);
         sm.setSubject("Servico confirmado! Código: " + obj.getId());
         sm.setSentDate(new Date(System.currentTimeMillis()));
@@ -29,14 +29,14 @@ public abstract class AbstractEmailService implements EmailService {
     }
 
     @Override
-    public void sendNewPasswordEmail(Cliente cliente, String newPass) {
-        SimpleMailMessage sm = prepareNewPasswordEmail(cliente, newPass);
+    public void sendNewPasswordEmail(Usuario usuario, String newPass) {
+        SimpleMailMessage sm = prepareNewPasswordEmail(usuario, newPass);
         sendEmail(sm);
     }
 
-    protected SimpleMailMessage prepareNewPasswordEmail(Cliente cliente, String newPass) {
+    protected SimpleMailMessage prepareNewPasswordEmail(Usuario usuario, String newPass) {
         SimpleMailMessage sm = new SimpleMailMessage();
-        sm.setTo(cliente.getEmail());
+        sm.setTo(usuario.getEmail());
         sm.setFrom(sender);
         sm.setSubject("Solicitação de nova senha");
         sm.setSentDate(new Date(System.currentTimeMillis()));

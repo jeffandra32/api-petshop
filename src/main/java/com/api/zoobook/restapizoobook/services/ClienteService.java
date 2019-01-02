@@ -1,19 +1,11 @@
 package com.api.zoobook.restapizoobook.services;
 
-import com.api.zoobook.restapizoobook.domain.Cidade;
-import com.api.zoobook.restapizoobook.domain.Cliente;
-import com.api.zoobook.restapizoobook.domain.Endereco;
-import com.api.zoobook.restapizoobook.domain.enums.Perfil;
-import com.api.zoobook.restapizoobook.domain.enums.TipoCliente;
-import com.api.zoobook.restapizoobook.dto.ClienteDTO;
-import com.api.zoobook.restapizoobook.dto.ClienteNewDTO;
-import com.api.zoobook.restapizoobook.repositores.ClienteRepository;
-import com.api.zoobook.restapizoobook.repositores.EnderecoRepository;
-import com.api.zoobook.restapizoobook.security.UserSS;
-import com.api.zoobook.restapizoobook.services.exceptions.AuthorizationException;
-import com.api.zoobook.restapizoobook.services.exceptions.DataIntegrityException;
-import com.api.zoobook.restapizoobook.services.exceptions.ObjectNotFoundException;
-import org.glassfish.jersey.server.Uri;
+import java.awt.image.BufferedImage;
+import java.net.URI;
+import java.util.List;
+import java.util.Optional;
+
+import com.api.zoobook.restapizoobook.domain.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -25,10 +17,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.image.BufferedImage;
-import java.net.URI;
-import java.util.List;
-import java.util.Optional;
+import com.api.zoobook.restapizoobook.domain.Cidade;
+import com.api.zoobook.restapizoobook.domain.Endereco;
+import com.api.zoobook.restapizoobook.domain.enums.Perfil;
+import com.api.zoobook.restapizoobook.domain.enums.TipoUsuario;
+import com.api.zoobook.restapizoobook.dto.UsuarioDTO;
+import com.api.zoobook.restapizoobook.dto.ClienteNewDTO;
+import com.api.zoobook.restapizoobook.repositores.ClienteRepository;
+import com.api.zoobook.restapizoobook.repositores.EnderecoRepository;
+import com.api.zoobook.restapizoobook.security.UserSS;
+import com.api.zoobook.restapizoobook.services.exceptions.AuthorizationException;
+import com.api.zoobook.restapizoobook.services.exceptions.DataIntegrityException;
+import com.api.zoobook.restapizoobook.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class ClienteService {
@@ -54,20 +54,20 @@ public class ClienteService {
     @Value("${img.profile.size}")
     private Integer size;
 
-    public Cliente find(Integer id) {
+    public Usuario find(Integer id) {
 
         UserSS user = UserService.authenticated();
         if (user==null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
             throw new AuthorizationException("Acesso negado");
         }
 
-        Optional<Cliente> obj = repo.findById(id);
+        Optional<Usuario> obj = repo.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException(
-                "Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
+                "Objeto não encontrado! Id: " + id + ", Tipo: " + Usuario.class.getName()));
     }
 
     @Transactional
-    public Cliente insert(Cliente obj) {
+    public Usuario insert(Usuario obj) {
         obj.setId(null);
         obj = repo.save(obj);
         enderecoRepository.saveAll(obj.getEnderecos());
@@ -75,14 +75,14 @@ public class ClienteService {
     }
 
     @Transactional
-    public Cliente insertLogin(Cliente obj) {
+    public Usuario insertLogin(Usuario obj) {
         obj = repo.save(obj);
         return obj;
     }
 
 
-    public Cliente update(Cliente obj) {
-        Cliente newObj = find(obj.getId());
+    public Usuario update(Usuario obj) {
+        Usuario newObj = find(obj.getId());
         updateData(newObj, obj);
         return repo.save(newObj);
     }
@@ -97,11 +97,11 @@ public class ClienteService {
         }
     }
 
-    public List<Cliente> findAll() {
+    public List<Usuario> findAll() {
         return repo.findAll();
     }
 
-    public Cliente findByEmail(String email) {
+    public Usuario findByEmail(String email) {
         UserSS user = UserService.authenticated();
         if (user == null || !user.hasRole(Perfil.ADMIN) && !email.equals(user.getUsername())) {
             throw new AuthorizationException("Acesso negado");
@@ -115,40 +115,40 @@ public class ClienteService {
             throw new AuthorizationException("Acesso negado");
         }
 
-        Cliente obj = repo.findByEmail(email);
+        Usuario obj = repo.findByEmail(email);
         if (obj == null) {
             throw new ObjectNotFoundException(
-                    "Objeto não encontrado! Id: " + user.getId() + ", Tipo: " + Cliente.class.getName());
+                    "Objeto não encontrado! Id: " + user.getId() + ", Tipo: " + Usuario.class.getName());
         }
         return obj;
     }
 
-    public Page<Cliente> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+    public Page<Usuario> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
         return repo.findAll(pageRequest);
     }
 
-    public Cliente fromDTO(ClienteDTO objDto) {
-        return new Cliente(objDto.getId(), objDto.getNome(), objDto.getEmail(), null, null, null);
+    public Usuario fromDTO(UsuarioDTO objDto) {
+        return new Usuario(objDto.getId(), objDto.getName(), objDto.getEmail(),null , null,null, null, null);
     }
 
-    public Cliente fromDTO(ClienteNewDTO objDto) {
-        Cliente cli = new Cliente(null, objDto.getNome(), objDto.getEmail(), objDto.getCpfOuCnpj(), TipoCliente.toEnum(objDto.getTipo()), pe.encode(objDto.getSenha()));
+    public Usuario fromDTO(ClienteNewDTO objDto) {
+        Usuario cli = new Usuario(null, objDto.getName(), objDto.getEmail(), objDto.getCpfOuCnpj(), objDto.getBirthDate(), objDto.getCreateAt() ,TipoUsuario.toEnum(objDto.getType()), pe.encode(objDto.getPassword()));
         Cidade cid = new Cidade(objDto.getCidadeId(), null, null);
-        Endereco end = new Endereco(null, objDto.getLogradouro(), objDto.getNumero(), objDto.getComplemento(), objDto.getBairro(), objDto.getCep(), cli, cid);
+        Endereco end = new Endereco(null, objDto.getAddress(), objDto.getNumber(), objDto.getComplement(), objDto.getNeighborhood(), objDto.getCep(), cli, cid);
         cli.getEnderecos().add(end);
-        cli.getTelefones().add(objDto.getTelefone1());
-        if (objDto.getTelefone2()!=null) {
-            cli.getTelefones().add(objDto.getTelefone2());
+        cli.getTelefones().add(objDto.getFone1());
+        if (objDto.getFone2()!=null) {
+            cli.getTelefones().add(objDto.getFone2());
         }
-        if (objDto.getTelefone3()!=null) {
-            cli.getTelefones().add(objDto.getTelefone3());
+        if (objDto.getFone3()!=null) {
+            cli.getTelefones().add(objDto.getFone3());
         }
         return cli;
     }
 
-    private void updateData(Cliente newObj, Cliente obj) {
-        newObj.setNome(obj.getNome());
+    private void updateData(Usuario newObj, Usuario obj) {
+        newObj.setName(obj.getName());
         newObj.setEmail(obj.getEmail());
     }
 

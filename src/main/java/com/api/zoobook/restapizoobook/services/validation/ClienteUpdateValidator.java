@@ -1,7 +1,7 @@
 package com.api.zoobook.restapizoobook.services.validation;
 
-import com.api.zoobook.restapizoobook.domain.Cliente;
-import com.api.zoobook.restapizoobook.dto.ClienteDTO;
+import com.api.zoobook.restapizoobook.domain.Usuario;
+import com.api.zoobook.restapizoobook.dto.UsuarioDTO;
 import com.api.zoobook.restapizoobook.repositores.ClienteRepository;
 import com.api.zoobook.restapizoobook.resources.exceptions.FieldMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ClienteUpdateValidator implements ConstraintValidator<ClienteUpdate, ClienteDTO> {
+public class ClienteUpdateValidator implements ConstraintValidator<ClienteUpdate, UsuarioDTO> {
 
     @Autowired
     private HttpServletRequest request;
@@ -27,7 +27,7 @@ public class ClienteUpdateValidator implements ConstraintValidator<ClienteUpdate
     }
 
     @Override
-    public boolean isValid(ClienteDTO objDto, ConstraintValidatorContext context) {
+    public boolean isValid(UsuarioDTO objDto, ConstraintValidatorContext context) {
 
         @SuppressWarnings("unchecked")
         Map<String, String> map = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
@@ -35,7 +35,7 @@ public class ClienteUpdateValidator implements ConstraintValidator<ClienteUpdate
 
         List<FieldMessage> list = new ArrayList<>();
 
-        Cliente aux = repo.findByEmail(objDto.getEmail());
+        Usuario aux = repo.findByEmail(objDto.getEmail());
         if (aux != null && !aux.getId().equals(uriId)) {
             list.add(new FieldMessage("email", "Email já existente"));
         }

@@ -1,9 +1,7 @@
 package com.api.zoobook.restapizoobook.services;
 
-import com.api.zoobook.restapizoobook.domain.Categoria;
-import com.api.zoobook.restapizoobook.domain.Pet;
-import com.api.zoobook.restapizoobook.domain.Produto;
-import com.api.zoobook.restapizoobook.dto.PetDTO;
+import com.api.zoobook.restapizoobook.domain.servico.Categoria;
+import com.api.zoobook.restapizoobook.domain.servico.Produto;
 import com.api.zoobook.restapizoobook.dto.ProdutoDTO;
 import com.api.zoobook.restapizoobook.repositores.CategoriaRepository;
 import com.api.zoobook.restapizoobook.repositores.ProdutoRepository;
@@ -22,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.awt.image.BufferedImage;
 import java.net.URI;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,8 +58,8 @@ public class ProdutoService {
 
     public Produto insert(Produto obj) {
         obj.setId(null);
-        obj.setNome(null);
-        obj.setPreco(null);
+        obj.setName(null);
+        obj.setPrice(null);
         obj = repo.save(obj);
         return obj;
     }
@@ -84,7 +81,7 @@ public class ProdutoService {
     }
 
     public Produto fromDTO(ProdutoDTO objDto) {
-        return new Produto(objDto.getId(), objDto.getNome(), objDto.getPreco());
+        return new Produto(objDto.getId(), objDto.getName(), objDto.getPrice());
     }
 
     public List<Produto> findAll() {
@@ -92,8 +89,8 @@ public class ProdutoService {
     }
 
     private void updateData(Produto newObj, Produto obj) {
-        newObj.setNome(obj.getNome());
-        newObj.setPreco(obj.getPreco());
+        newObj.setName(obj.getName());
+        newObj.setPrice(obj.getPrice());
         newObj.setImageUrl(obj.getImageUrl());
     }
 

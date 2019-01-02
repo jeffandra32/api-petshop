@@ -1,6 +1,6 @@
 package com.api.zoobook.restapizoobook.dto;
 
-import com.api.zoobook.restapizoobook.domain.Produto;
+import com.api.zoobook.restapizoobook.domain.servico.Produto;
 
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
@@ -10,9 +10,9 @@ public class ProdutoDTO implements Serializable {
 
     private Integer id;
     @NotEmpty(message = "Campo obrigatótio!")
-    private String nome;
+    private String name;
     @NotEmpty(message = "Campo obrigatótio!")
-    private Double preco;
+    private Double price;
     private String imageUrl;
 
     public ProdutoDTO() {
@@ -20,8 +20,8 @@ public class ProdutoDTO implements Serializable {
 
     public ProdutoDTO(Produto obj) {
         id = obj.getId();
-        nome = obj.getNome();
-        preco = obj.getPreco();
+        name = obj.getName();
+        price = obj.getPrice();
         imageUrl = obj.getImageUrl();
     }
 
@@ -33,20 +33,20 @@ public class ProdutoDTO implements Serializable {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Double getPreco() {
-        return preco;
+    public Double getPrice() {
+        return price;
     }
 
-    public void setPreco(Double preco) {
-        this.preco = preco;
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public String getImageUrl() {
